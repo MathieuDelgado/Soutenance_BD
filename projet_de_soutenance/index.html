@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+		integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>Projet soutenance</title>
+</head>
+
+<header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+            <!-- Logo du site cliquable qui redirige sur la page d'accueil -->
+            <a class="navbar-brand" href="#"><img src="#" alt="LOGO" id="logo_itmc"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Bouton-lien "Accueil" et "Bibliothèque" -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">Accueil <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Bibliothèque</a>
+                    </li>
+                </ul>
+
+                <!--  -->
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary">Inscription</button>
+                    <button type="button" class="btn btn-secondary">Connexion</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+<body>
+
+<!-- container-fluid permet d'étendre l'affchage qur l'intégralité de l'écran -->
+<!-- les bordures "border" sont à redéfinir en bootstrap avec border border-secondary -->
+	<div class="container-fluid mt-5 ">
+		<div class="row ">
+			<!-- le offset de 1 permet de centrer les 2 cadres -->
+			<div class="col-5 offset-1 text-center">
+				<figure class="figure border border-secondary rounded">
+					<img src="img/titeuf.jpg" class="figure-img img-fluid rounded" alt="titeuf">
+
+					<i class="far fa-star"></i>
+					<i class="far fa-star"></i>
+					<i class="far fa-star"></i>
+					<i class="far fa-star"></i>
+					<i class="far fa-star"></i>
+					<figcaption class="figure-caption text-center">Le Lorem Ipsum est simplement du faux texte employé
+						dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte
+						standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble
+						des morceaux .</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-5">
+				<div class="border border-secondary rounded">
+					<div class="fonctionnement text-center">
+						<h2>fonctionnement</h2>
+						<p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page
+							avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les
+							années 1500, quand un imprimeur anonyme assembla ensemble des morceaux </p>
+					</div>
+				</div>	
+
+					<div class=" carrecent border border-secondary rounded">
+						<div class="recent">
+							<h2>AJOUT RECENT</h2>
+							<img class="float_left" src="img/titeuf.jpg" alt="titeuf" style="max-width: 10rem" />
+							<div>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed non risus. Suspendisse
+								lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum
+								ultrices diam.</div>
+
+							</div
+							<img src="img/titeuf.jpg" style="max-width: 10rem">
+							<img src="img/titeuf.jpg" style="max-width: 10rem">
+
+						</div>
+
+					</div>
+				
+			</div>
+		</div>
+</body>
+ <footer>
+        <nav class="bg-dark">
+            <div class="container">
+                <div class="modal-footer">        
+                    <br />
+                        <a href="#"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
+                        <a href="#"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
+                        <a href="#"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+                        <a href="#"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+                </div>
+            </div>
+        </nav>
+    </footer>
+
+</html>

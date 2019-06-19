@@ -1,0 +1,42 @@
+body {
+	background-color: #c3c1c17d;
+}
+
+
+/* .fonctionnement, .recent {
+	border: solid 1px grey;
+	margin-bottom: 10px;
+	padding: 10px;
+	margin-left: 20px;
+} */
+.card {
+	border: none;
+}
+
+#Accueil{
+	background-color: #1e1057f7;
+    height: 80px;
+}
+#Accueil h2{
+	color: white;
+	text-align: center;
+	padding: 20px;
+}
+.form-inscription{
+	max-width: 80%;
+}
+#Faccueil{
+	background-color: #1e1057f7;
+    height: 80px;
+}
+#Faccueil h2{
+	color: white;
+	text-align: center;
+}
+.recent h2 {
+	text-align: center;
+}
+
+.carrecent {
+	margin-top: 15px;
+}
