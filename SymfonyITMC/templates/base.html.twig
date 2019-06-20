@@ -2,11 +2,103 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}Sans Titre{% endblock %} - ITMC</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <!-- Navbar/Haut de page -->
+	<header class="text-light">
+            <nav class="navbar navbar-expand-lg navbar-light header-color ">
+                <!-- Logo du site cliquable qui redirige sur la page d'accueil -->
+                <a class="navbar-brand" href="#"><img src="#" alt="LOGO" id="index_logo_itmc"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <!-- Bouton-lien "Accueil" et "Bibliothèque" -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-light font-weight-bold" href="{{ path('home')}}">Accueil</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-light font-weight-bold" href="#">Bibliothèque</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end">
+                        <!-- Champ de recherche et validation -->
+                        <!-- Champ texte de recherche -->
+                        <li class="nav-item mx-2  mt-auto">
+                            <div class="input-group mb-2">
+                                <input class="form-control  my-lg-0" type="search" placeholder="Rechercher"
+                                    aria-label="Search">
+                                <!-- Bouton de validation -->
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-success my-sm-0 rounded-right" type="submit"
+                                        title="Rechercher"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Double bouton d'inscription et de connexion -->
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-light font-weight-bold" href="{{ path('register') }}"><i
+                                    class="fas fa-user-plus mr-1"></i>Inscription</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-light font-weight-bold" href="login.html"><i
+                                    class="far fa-user mr-1"></i>Connexion</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        
+        {% block body %}corps de la page{% endblock %}
+    
+       <!-- Pied de page -->
+        <footer class="footer-color text-light pt-2">
+            <div class="container_footer">
+                <div class="row mx-1">
+                    <div class="col-sm-3">
+                        <h5>Get started</h5>
+                        <ul>
+                            <li><a class="text-light" href="{{ path('home')}}">Acceuil</a></li>
+                            <li><a class="text-light" href="{{ path('register') }}">S'inscrire</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <h5>A propos</h5>
+                        <ul>
+                            <li><a class="text-light" href="#">Qui somme nous</a></li>
+                            <li><a class="text-light" href="#">Nous contacter</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <h5>Support</h5>
+                        <ul>
+                            <li><a class="text-light" href="#">Plan du site</a></li>
+                            <li><a class="text-light" href="#">Mentions légales</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-default validation_button">Nous contacter</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2019 Copyright Text </p>
+            </div>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
