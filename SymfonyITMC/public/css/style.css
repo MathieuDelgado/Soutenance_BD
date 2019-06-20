@@ -1,0 +1,113 @@
+/*importation de la police des titre*/
+@font-face{
+    font-family: "Adventure.otf";
+    src: url('../fonts/Adventure.otf');
+}
+
+/*classe de style des titre*/
+.style_title{
+    font-family: 'Adventure.otf', Arial, Helvetica, sans-serif;
+    font-size: 4rem;
+    color: #0c2538;
+}
+/*creer une classe pour le body pour éviter de ciblé la balise dixit Matou*/
+body {
+    background-color:#cad3a9;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*style des bouton de validation formulaire*/
+.validation_button{
+    background-color: #638270;
+}
+/* HEADER  */
+    /* Taille logo navbar ITMC */
+    #index_logo_itmc{
+        width: 120px;
+    }
+    /* Couleur de fond du Header */
+    .header-color{
+        background-color: #0c2538;
+        font-size: 1.2rem;
+    }
+
+
+/* FOOTER */
+    /* Pour que le Footer soit toujours en pied de page */
+        html{
+            height: 100%;
+        }
+        main{
+            min-height: 100%;
+            width: 100%;
+        } 
+        footer{
+            position: relative;
+
+            bottom: 0;
+
+            left: 0;
+
+            right: 0;
+
+            width: 100%;
+
+            padding-bottom: 1rem;
+        }
+        .row
+        
+        .pt-2, .py-2 {
+            margin-top: 2em !important;
+            padding-bottom: 1em !important ;
+        }
+    /* Couleur de fond du Footer */
+    .footer-color{
+        background-color: #0c2538;
+    }
+    
+    
+/* debut Style de Kamal */
+.card {
+    border: none;
+}
+
+.form-inscription{
+    max-width: 80%;
+}
+
+.carrecent {
+    margin-top: 15px;
+}
+
+.background {
+    background: #fff;
+}
+/* fin Style de Kamal */
+
+
+/* debut style BDBDD */
+
+.nav_bar_library{
+    background-color: #638270;
+    height: 50px;
+}
+
+.nav_bar_library>li>a.active{
+    background-color: #EDE059 !important;
+}
+
+.nav_bar_library>li>a{
+    color: white ;
+    height: 50px;
+}
+
+.nav_bar_library>li>a:hover{
+    color: orange;
+}
+
+.container_library{
+    background-color: #EEEE99;
+}
+
+/* fin style BDBDD */
+
