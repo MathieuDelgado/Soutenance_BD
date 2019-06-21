@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <h1 class="col-12 text-center my-4">Connexion</h1>
+        </div>
+
+        <div class="row">
+            {% if success is defined %}
+                <p class="alert alert-success col-12 text-center">Vous êtes bien connecté ! <a href="{{ path('home') }}">Cliquez ici pour poursuivre</a></p>
+            {% else %}
+                <form class="col-12 col-md-4 offset-md-4" action="{{ path("login") }}" method="POST">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="email" placeholder="email">
+                        {% if errorsList.invalidEmail is defined %}
+                            <p class="text-danger">Email invalide</p>
+                        {% endif %}
+                        {% if errorsList.notActive is defined %}
+                            <p class="text-danger">Compte pas activé</p>
+                        {% endif %}
+                        {% if errorsList.notExist is defined %}
+                            <p class="text-danger">Compte inexistant</p>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password" placeholder="password">
+                        {% if errorsList.invalidPassword is defined %}
+                            <p class="text-danger">Mot de passe invalide</p>
+                        {% endif %}
+                        {% if errorsList.badPassword is defined %}
+                            <p class="text-danger">Mauvais mot de passe</p>
+                        {% endif %}
+                    </div>
+                    <input class="btn btn-success col-12" type="submit">
+                </form>
+
+
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}
