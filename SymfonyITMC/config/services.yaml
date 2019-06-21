@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    locale: 'fr'
+    google_recaptcha_public_key: '%env(GOOGLE_RECAPTCHA_PUBLIC_KEY)%'
+    google_recaptcha_private_key: '%env(GOOGLE_RECAPTCHA_PRIVATE_KEY)%'
 
 services:
     # default configuration for services in *this* file
