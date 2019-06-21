@@ -30,6 +30,13 @@
                         <li class="nav-item mx-2">
                             <a class="nav-link text-light font-weight-bold" href="#">Bibliothèque</a>
                         </li>
+                        {% if (app.session.has('account')) and (app.session.get('account', 'User.admin')) %}
+                            
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-light font-weight-bold" href="{{ path('admin') }}">Page Admin</a>
+                        </li>
+
+                        {% endif %}
                     </ul>
                     <ul class="navbar-nav justify-content-end">
                         <!-- Champ de recherche et validation -->
@@ -55,7 +62,7 @@
                                 <div class="dropdown-menu dropdown-menu-right bg_color_dkblue" aria-labelledby="dropdownMenu2">
                                   <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="far fa-user mr-1"></i>Mon profile</a></button>
                                   <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-user-edit mr-1"></i>Modifier mon profile</a></button>
-                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-power-off mr-1"></i>Deconnexion</a></button>
+                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="{{ path('logout') }}"><i class="fas fa-power-off mr-1"></i>Deconnexion</a></button>
                                 </div>
                               </div>
                         {% else %}
