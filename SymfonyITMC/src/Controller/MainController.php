@@ -32,7 +32,7 @@ class MainController extends AbstractController
      * @Route("/inscrivez-vous/", name="register")
      * Page d'inscription
      */
-     public function register(Request $request)
+     public function register(Request $request, Recaptcha $recaptcha)
      {
         //recuperation de la session
         $session = $this->get('session');
@@ -50,7 +50,7 @@ class MainController extends AbstractController
             $email = $request->request->get('email');
             $password = $request->request->get('password');
             $confirmPassword = $request->request->get('confirmPassword');
-            //$recaptchaCode = $request->request->get('g-recaptcha-response');
+            $recaptchaCode = $request->request->get('g-recaptcha-response');
 
             //bloc de verifs
             //regex a utiliser [a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,120}
@@ -73,9 +73,9 @@ class MainController extends AbstractController
             if($password != $confirmPassword){
                 $errors['invalidPasswordConfirm'] = true;
             }
-            // if(!$recaptcha->isValid($recaptchaCode, $request->server->get('REMOTE_ADDR'))){
-            //     $errors['captchaInvalid'] = true;
-            // }
+            if(!$recaptcha->isValid($recaptchaCode, $request->server->get('REMOTE_ADDR'))){
+                $errors['captchaInvalid'] = true;
+            }
 
             //si aucune erreur
             if(!isset($errors)){
