@@ -61,6 +61,12 @@
                 </div>
 
                 <!-- zone de recaptcha-->
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_public_key }}"></div>
+                    {% if errorsList.captchaInvalid is defined %}
+                        <p class="text-danger">Veuillez remplir le captcha</p>
+                    {% endif %}
+                </div>
 
                 <button class="btn btn-dark float-right validation_button" type="submit">Valider</button>
             </form>
@@ -68,4 +74,8 @@
         </div>
     </div>
 </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
