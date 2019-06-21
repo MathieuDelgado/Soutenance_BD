@@ -11,6 +11,8 @@ use \Datetime;
 use App\Entity\User;
 use App\Entity\Book;
 use App\Entity\Kind;
+use App\Repository\UserRepository;
+
 
 use App\Service\Recaptcha;
 
@@ -114,18 +116,6 @@ class MainController extends AbstractController
         }
 
         return $this->render('register.html.twig');
-    }
-
-    /**
-     * @Route("/page-administration/", name="admin")
-     * Page de l'administrateur
-     */
-    public function admin()
-    {
-        
-        dump(1);
-
-        return $this->render('admin.html.twig');
     }
 
 }
