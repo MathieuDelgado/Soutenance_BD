@@ -18,7 +18,7 @@ class MainController extends AbstractController
 {
 
     /**
-     * @Route("/Accueil/", name="home")
+     * @Route("/", name="home")
      * Page d'accueil du site
      */
      public function home()
