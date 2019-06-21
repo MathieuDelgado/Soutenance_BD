@@ -58,6 +58,16 @@ class User
      */
     private $books;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $register_token;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -176,6 +186,30 @@ class User
             $this->books->removeElement($book);
             $book->removeIdUser($this);
         }
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getRegisterToken(): ?string
+    {
+        return $this->register_token;
+    }
+
+    public function setRegisterToken(string $register_token): self
+    {
+        $this->register_token = $register_token;
 
         return $this;
     }
