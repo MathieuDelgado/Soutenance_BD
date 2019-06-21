@@ -21,10 +21,10 @@ class MainController extends AbstractController
      * @Route("/", name="home")
      * Page d'accueil du site
      */
-     public function home()
-     {
-         return $this->render('home.html.twig');
-     }
+    public function home()
+    {
+        return $this->render('home.html.twig');
+    }
 
     /**
      * @Route("/inscrivez-vous/", name="register")
@@ -114,6 +114,18 @@ class MainController extends AbstractController
         }
 
         return $this->render('register.html.twig');
-     }
+    }
+
+    /**
+     * @Route("/page-administration/", name="admin")
+     * Page de l'administrateur
+     */
+    public function admin()
+    {
+        
+        dump(1);
+
+        return $this->render('admin.html.twig');
+    }
 
 }
