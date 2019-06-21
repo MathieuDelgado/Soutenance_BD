@@ -30,6 +30,13 @@
                         <li class="nav-item mx-2">
                             <a class="nav-link text-light font-weight-bold" href="#">Bibliothèque</a>
                         </li>
+                        {% if (app.session.has('account')) and (app.session.get('account', 'User.admin')) %}
+                            
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-light font-weight-bold" href="{{ path('admin') }}">Page Admin</a>
+                        </li>
+
+                        {% endif %}
                     </ul>
                     <ul class="navbar-nav justify-content-end">
                         <!-- Champ de recherche et validation -->
@@ -45,6 +52,7 @@
                                 </div>
                             </div>
                         </li>
+                        
                         <!-- Double bouton d'inscription et de connexion -->
                         {% if app.session.has('account') %}
                         <div class="dropdown ">

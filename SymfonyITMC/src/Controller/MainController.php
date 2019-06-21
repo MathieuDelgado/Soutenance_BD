@@ -12,6 +12,8 @@ use App\Service\TokenGenerator;
 use App\Entity\User;
 use App\Entity\Book;
 use App\Entity\Kind;
+use App\Repository\UserRepository;
+
 use \Datetime;
 use \Swift_Mailer;
 use \Swift_Message;
@@ -270,5 +272,24 @@ class MainController extends AbstractController
 
     }
 
+<<<<<<< HEAD
 }
 
+=======
+
+    /**
+     * @Route("/detail-de-la-BD/{idBook}/", requirements={"name"="[1-9][0-9]{0,10}"}, name="displayOneBD")
+     * Page détail d'une seule BD
+     */
+    public function displayOneBD($idBook)
+    {
+        //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
+        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+        $book = $bookRepo->findOneById($idBook);
+
+             return $this->render('displayOneBD.html.twig', array(
+            'book'=>$book
+             ));            
+    }
+}
+>>>>>>> origin/master
