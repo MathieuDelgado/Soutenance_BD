@@ -272,11 +272,6 @@ class MainController extends AbstractController
 
     }
 
-<<<<<<< HEAD
-}
-
-=======
-
     /**
      * @Route("/detail-de-la-BD/{idBook}/", requirements={"name"="[1-9][0-9]{0,10}"}, name="displayOneBD")
      * Page détail d'une seule BD
@@ -292,4 +287,3 @@ class MainController extends AbstractController
              ));            
     }
 }
->>>>>>> origin/master
