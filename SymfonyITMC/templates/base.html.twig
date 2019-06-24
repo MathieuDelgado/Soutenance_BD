@@ -30,7 +30,8 @@
                         <li class="nav-item mx-2">
                             <a class="nav-link text-light font-weight-bold" href="#">Bibliothèque</a>
                         </li>
-                        {% if (app.session.has('account')) and (app.session.get('account', 'User.admin')) %}
+                        {# affichage du bouton pour page admin si droits attribués #}
+                        {% if app.session.has('account') and app.session.get('account').admin == 1 %}
                             
                         <li class="nav-item mx-2">
                             <a class="nav-link text-light font-weight-bold" href="{{ path('admin') }}">Page Admin</a>
@@ -57,12 +58,12 @@
                         {% if app.session.has('account') %}
                         <div class="dropdown ">
                                 <button class="btn btn-secondary dropdown-toggle text-light font-weight-bold bg_color_dkblue" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="far fa-user-circle mr-1"></i>Profile
+                                    <i class="far fa-user-circle mr-1"></i>Profil
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right bg_color_dkblue" aria-labelledby="dropdownMenu2">
-                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="far fa-user mr-1"></i>Mon profile</a></button>
-                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-user-edit mr-1"></i>Modifier mon profile</a></button>
-                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="{{ path('logout') }}"><i class="fas fa-power-off mr-1"></i>Deconnexion</a></button>
+                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="far fa-user mr-1"></i>Mon profil</a></button>
+                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-user-edit mr-1"></i>Modifier mon profil</a></button>
+                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="{{ path('logout') }}"><i class="fas fa-power-off mr-1"></i>Déconnexion</a></button>
                                 </div>
                               </div>
                         {% else %}
