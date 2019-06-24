@@ -11,6 +11,7 @@ use App\Service\Recaptcha;
 use App\Service\TokenGenerator;
 use App\Entity\User;
 use App\Entity\Book;
+use App\Entity\Comment;
 use App\Entity\Kind;
 use App\Repository\UserRepository;
 
@@ -28,8 +29,12 @@ class MainController extends AbstractController
      */
     public function home()
     {
+        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+        $book = $bookRepo->findOneById(1);
 
-        return $this->render('home.html.twig');
+        return $this->render('home.html.twig', array(
+            'book'=>$book
+        ));
     }
 
     /**
@@ -140,8 +145,8 @@ class MainController extends AbstractController
      * @Route("/activer-compte/{userId}/{userToken}/", name="activate", requirements = {"userId" = "[1-9][0-9]{0,10}", "userToken" = "[0-9a-fA-F]{32}"})
      * Page permettant d'activer un compte en bdd
      */
-    public function activate($userId, $userToken){
-
+    public function activate($userId, $userToken)
+    {
         // Récupération de l'utilisateur correspondant à l'id passé dans l'url
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->findOneById($userId);
@@ -183,8 +188,8 @@ class MainController extends AbstractController
      * @Route("/connexion/", name="login")
      * Page de connexion
      */
-    public function login(Request $request){
-
+    public function login(Request $request)
+    {
         // Récupération de la session
         $session = $this->get('session');
         // Si account existe en session, alors l'utilisateur est déjà connecté à un compte donc on le redirige sur la page d'accueil
@@ -272,7 +277,6 @@ class MainController extends AbstractController
 
     }
 
-
     /**
      * @Route("/detail-de-la-BD/{idBook}/", requirements={"name"="[1-9][0-9]{0,10}"}, name="displayOneBD")
      * Page détail d'une seule BD
@@ -281,10 +285,14 @@ class MainController extends AbstractController
     {
         //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+        $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
         $book = $bookRepo->findOneById($idBook);
+        $comments = $commentRepo->findAll();
 
-             return $this->render('displayOneBD.html.twig', array(
-            'book'=>$book
-             ));            
+        return $this->render('displayOneBD.html.twig', array(
+            'book'=>$book,
+            'comments' => $comments
+        )); 
+
     }
 }

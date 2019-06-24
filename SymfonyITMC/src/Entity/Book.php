@@ -63,10 +63,16 @@ class Book
      */
     private $kinds;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="book")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->id_user = new ArrayCollection();
         $this->kinds = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,6 +213,37 @@ class Book
         if ($this->kinds->contains($kind)) {
             $this->kinds->removeElement($kind);
             $kind->removeIdBook($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getBook() === $this) {
+                $comment->setBook(null);
+            }
         }
 
         return $this;
