@@ -287,8 +287,11 @@ class MainController extends AbstractController
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
         $book = $bookRepo->findOneById($idBook);
-        $comments = $commentRepo->findAll();
+        
+        $comments = $book->getComments();
 
+        
+        dump($comments);
         return $this->render('displayOneBD.html.twig', array(
             'book'=>$book,
             'comments' => $comments
