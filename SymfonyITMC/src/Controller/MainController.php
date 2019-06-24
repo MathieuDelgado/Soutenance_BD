@@ -14,6 +14,11 @@ use App\Entity\Book;
 use App\Entity\Comment;
 use App\Entity\Kind;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
+
+
+
+
 
 use \Datetime;
 use \Swift_Mailer;
@@ -291,30 +296,47 @@ class MainController extends AbstractController
         $comments = $book->getComments();
 
 
-        dump($comments);
         return $this->render('displayOneBD.html.twig', array(
             'book'=>$book,
             'comments' => $comments
         )); 
-
     }
-
 
 
 
     /**
-     * @Route("/bdThèque/", name = "bdbdd")
-     * page de la bibliothèque général
+     * @Route("/bdTeque-par-titre/", name = "bdbddByTitle")
+     * page de la bibliothèque général trié par titre
      */
-     public function displayAllBD()
+     public function displayAllBDByTitle()
     {
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
-        $books = $bookRepo->findall();
-        dump($books);
-        return $this->render('bdbdd.html.twig', array(
-            'books'=>$books
+        $books = $bookRepo->findAll();
+
+        return $this->render('bdbddByTitle.html.twig', array(
+            'books'=> $books
         ));
     }
+
+
+    /**
+     * @Route("/bdTeque-par-auteur/", name = "bdbddByAuthor")
+     * page de la bibliothèque général trié par Auteur
+     */
+    public function displayAllBDByAuthor()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.author DESC');
+        $books = $query->getResult();
+
+        dump($books);
+
+        return $this->render('bdbddByAuthor.html.twig', array(
+            'books'=> $books
+        ));
+    }
+
+
 
 }
 

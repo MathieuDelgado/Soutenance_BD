@@ -1,0 +1,63 @@
+
+{% extends "base.html.twig" %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<div class="">
+    <div class="container container_library px-0">
+        <ul class="nav nav-tabs nav_bar_library justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link " href="#">Ajouter une BD <i class="fas fa-plus"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="#">Dernier ajout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{{path('bdbddByTitle')}}">Par titre</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{{path('bdbddByAuthor')}}">Par auteurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="#">Par éditeurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="#">Par genre</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container library_bgc" >
+    
+        <div class="row mt-4" id="lienTitleAlphC">
+            {% for book in books %}
+                <div class="col-md-3 mb-2">
+                    <div class="card">
+                        <img src=" {{book.getImgUrl()}}" class="img-fluid" alt="titeuf">
+                        <div class="ml-2">
+                            <p> {{book.title}} </p>
+                            <p>{{book.author}}</p>
+                            <p>{{book.editor}}</p>
+                            <p>Note :
+                                <span class="ml-4">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div> 
+            {% endfor %}     
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+            
+        
