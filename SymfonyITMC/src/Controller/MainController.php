@@ -290,7 +290,7 @@ class MainController extends AbstractController
         
         $comments = $book->getComments();
 
-        
+
         dump($comments);
         return $this->render('displayOneBD.html.twig', array(
             'book'=>$book,
@@ -298,4 +298,24 @@ class MainController extends AbstractController
         )); 
 
     }
+
+
+
+
+    /**
+     * @Route("/bdThèque/", name = "bdbdd")
+     * page de la bibliothèque général
+     */
+     public function displayAllBD()
+    {
+        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+        $books = $bookRepo->findall();
+        dump($books);
+        return $this->render('bdbdd.html.twig', array(
+            'books'=>$books
+        ));
+    }
+
 }
+
+
