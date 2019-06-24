@@ -45,7 +45,8 @@
                         <li class="nav-item mx-2">
                             <a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-book mr-2"></i>Bibliothèque</a>
                         </li>
-                        {% if (app.session.has('account')) and (app.session.get('account', 'User.admin')) %}
+                        {# affichage du bouton pour page admin si droits attribués #}
+                        {% if app.session.has('account') and app.session.get('account').admin == 1 %}
                             
                         <li class="nav-item mx-2">
                             <a class="nav-link text-light font-weight-bold" href="{{ path('admin') }}"><i class="fas fa-cog mr-2"></i>Page Admin</a>

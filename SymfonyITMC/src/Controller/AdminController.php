@@ -32,17 +32,9 @@ class AdminController extends AbstractController
 
         if(!$session->has('account') || !$session->get('account')->getAdmin()){
             throw new AccessDeniedHttpException();
-
-        } else {
-            $adminStatus = $session->get('account')->getAdmin();
-            dump($adminStatus);
-            dump($session);
-            
-            
-            return $this->render('admin.html.twig');
         }
-        return $this->redirectToRoute('home');
         
+        return $this->render('admin.html.twig');
     }
 
 }
