@@ -31,7 +31,7 @@
 	<header class="text-light">
             <nav class="navbar navbar-expand-lg navbar-light header_ft_size bg_color_dkblue">
                 <!-- Logo du site cliquable qui redirige sur la page d'accueil -->
-                <a class="navbar-brand" href="#"><img src="#" alt="LOGO" id="index_logo_itmc"></a>
+                <a class="navbar-brand" href="{{ path('home') }}"><img src="{{ asset('img/logo_3.png')}}" alt="LOGO" id="index_logo_itmc"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -100,33 +100,33 @@
 
                 <div class="row mx-2">
                     <div class="col-sm-3">
-                        <h5>Get started</h5>
+                        <h5> Commencer à </h5>
                         <ul>
-                            <li><a class="text-light" href="{{ path('home')}}">Accueil</a></li>
+                            <li><a class="text-light" href="{{ path('home') }}">Accueil</a></li>
                             <li><a class="text-light" href="{{ path('register') }}">S'inscrire</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-3">
-                        <h5>A propos</h5>
+                        <h5> A propos </h5>
                         <ul>
-                            <li><a class="text-light" href="#">Qui somme nous</a></li>
-                            <li><a class="text-light" href="#">Nous contacter</a></li>
+                            <li><a class="text-light" href="{{ path('about_us') }}"> Qui somme-nous ? </a></li> 
+                            <li><a class="text-light" href="{{ path('contact') }}"> Nous contacter </a></li>
                         </ul>
                     </div>
                     <div class="col-sm-3">
-                        <h5>Support</h5>
+                        <h5> Support </h5>
                         <ul>
-                            <li><a class="text-light" href="#">Plan du site</a></li>
-                            <li><a class="text-light" href="#">Mentions légales</a></li>
+                            <li><a class="text-light" href="{{ path('sitemap') }}"> Plan du site </a></li>
+                            <li><a class="text-light" href="{{ path('mentions_legales') }}"> Mentions légales </a></li>
                         </ul>
                     </div>
                     <div class="col-sm-3">
-                        <button type="button" class="btn btn-default btn-info">Nous contacter</button>
+                        <button type="button" class="btn btn-default btn-info"><a class="text-light" href="{{ path('contact') }}"> Nous contacter </a></button>
                     </div>
                 </div>
     
             <div class="row m-2">
-                <p>© 2019 Copyright Text </p>
+                <p> © 2019 Copyright Text </p>
             </div>
         </footer>
 
