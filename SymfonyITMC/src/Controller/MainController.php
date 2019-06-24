@@ -29,8 +29,12 @@ class MainController extends AbstractController
      */
     public function home()
     {
+        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+        $book = $bookRepo->findOneById(1);
 
-        return $this->render('home.html.twig');
+        return $this->render('home.html.twig', array(
+            'book'=>$book
+        ));
     }
 
     /**

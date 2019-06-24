@@ -3,145 +3,128 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-<main class="mb-4">
-
-    <!-- container-fluid permet d'étendre l'affchage qur l'intégralité de l'écran -->
-    <!-- les bordures "border" sont à redéfinir en bootstrap avec border border-secondary -->
-    <div class="container-fluid mt-5 ">
-        <div class="row ">
-            <!-- le offset de 1 permet de centrer les 2 cadres -->
-            <div class="col-lg-5  col-12 offset-lg-1 text-center order-2 order-lg-1 ">
-                <!-- classe background afin de crées un couleur de fond-->
-                <figure class=" figure background rounded pl-4 pt-4 pb-4 pr-4">
-                    <img src="img/titeuf.jpg" class="figure-img img-fluid rounded" alt="titeuf">
-                    <!-- les etoiles récupéré grace a fontowsome-->
-                    <i class=" ml-4 far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <figcaption class="figure-caption text-center">Le Lorem Ipsum est simplement du faux texte
-                        employé
-                        dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte
-                        standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla
-                        ensemble
-                        des morceaux .</figcaption>
-                </figure>
-            </div>
-            <!-- le cadre pour décrire le fonctionnement de la page-->
-            <div class="col-lg-5 col-12  order-1 order-lg-2">
-                <div class=" background border rounded pl-4 pt-4 pb-4 pr-4">
-                    <div class="fonctionnement text-center">
-                        <h2>fonctionnement</h2>
-                        <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en
-                            page
-                            avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les
-                            années 1500, quand un imprimeur anonyme assembla ensemble des morceaux Le Lorem Ipsum
-                            est simplement du faux texte employé dans la composition et la mise en page
-                            avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les
-                            années 1500, quand un imprimeur anonyme assembla ensemble des morceauxLe Lorem Ipsum est
-                            simplement du faux texte employé dans la composition et la mise en page
-                            avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les
-                            années 1500, quand un imprimeur anonyme assembla ensemble des morceaux <br> Le Lorem
-                            Ipsum est simplement du faux texte employé dans la composition et la mise en page
-                            avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les
-                            années 1500, quand un imprimeur anonyme assembla ensemble des morceaux Le Lorem Ipsum
-                            est simplement du faux texte employé dans la composition et la mise en page
-                            avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les
-                            années 1500, quand un imprimeur anonyme assembla ensemble des morceauxLe Lorem Ipsum est
-                            simplement du faux texte employé dans la composition et la mise en page
-                            avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les
-                            <br>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise
-                            en page
-                            avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les
-                            nnées 1500, quand un imprimeur anonyme assembla ensemble des morceauxLe Lorem Ipsum est
-                            simplement du faux texte </p>
-                    </div>
+<!-- container-fluid permet d'étendre l'affchage qur l'intégralité de l'écran -->
+<main class="container-fluid my-4">
+    <div class="row">
+        <!-- le offset de 1 permet de centrer les 2 cadres -->
+        <div
+            class="col-lg-5 col-12 offset-lg-1 bg-white text-center order-2 order-lg-1 mb-2 mb-lg-2 mr-lg-2 p-4 comic_case">
+            <h2 class="text-uppercase mx-auto style_title">La BD du mois</h2>
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <i class="fas fa-star fa-2x text-warning"></i>
+                    <i class="fas fa-star fa-2x text-warning"></i>
+                    <i class="fas fa-star fa-2x text-warning"></i>
+                    <i class="fas fa-star fa-2x text-warning"></i>
+                    <i class="fas fa-star fa-2x text-warning"></i>
                 </div>
             </div>
-            <!-- le cadre pour les ajout récent contien une image de la bd et sa description-->
-            <div class="col-lg-5 col-12 offset-lg-6 order-3 order-lg-3">
-                <!-- les classes background et carrecent ont été créer afin de les rappelé en css-->
-                <div class=" background carrecent rounded pl-4 pt-4 pb-4 pr-4 ">
-                    <div class="text-center">
-                        <h2>ajout récent</h2>
-                    </div>
-                    <!-- le list-unstyled permet de lister nos image et leur text en colomn et grace a la classe media on ajoute du text à coté de notre page -->
-                    <ul class="list-unstyled">
-                        <li class="media">
-                            <!--1st image et son text-->
-                            <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
-                            <div class="media-body">
-                                <p class="mt-0 mb-1">List-based media object</p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus
-                                odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                nisi vulputate
-                                fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-
-                        </li>
-                        <!--2nd image et son text-->
-                        <li class="media my-4">
-                            <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
-                            <div class="media-body">
-                                <p class="mt-0 mb-1">List-based media object</p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus
-                                odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                nisi vulputate
-                                fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </li>
-                        <!--3rd image et son text-->
-                        <li class="media">
-                            <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
-                            <div class="media-body">
-                                <p class="mt-0 mb-1">List-based media object</p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus
-                                odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                nisi vulputate
-                                fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </li>
-                        <!--4th image et son text-->
-                        <li class="media my-4">
-                            <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
-                            <div class="media-body">
-                                <p class="mt-0 mb-1">List-based media object</p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus
-                                odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                nisi vulputate
-                                fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </li>
-
-                        <li class="media my-4">
-                            <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
-                            <div class="media-body">
-                                <p class="mt-0 mb-1">List-based media object</p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus
-                                odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                nisi vulputate
-                                fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </li>
-                        <li class="media my-4">
-                            <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
-                            <div class="media-body">
-                                <p class="mt-0 mb-1">List-based media object</p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus
-                                odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                nisi vulputate
-                                fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </li>
-                    </ul>
+            <figure class="figure rounded ">
+                <img src="{{book.getImgUrl()}}" class="figure-img img-fluid" alt="{{book.getTitle()}}"
+                    title="{{book.getTitle()}}">
+                <!-- les etoiles récupéré grace a fontowsome-->
+                <figcaption class="figure-caption text-center comic_text">{{ book.getSynopsis() }}</figcaption>
+            </figure>
+        </div>
+        <!-- le cadre pour décrire le fonctionnement de la page-->
+        <div class="col-lg-5 col-12 order-1 order-lg-2 bg-white p-4 mb-2 ml-lg-2 comic_case">
+            <div class="fonctionnement text-center">
+                <h2 class="text-uppercase style_title">il te manque une case !</h2>
+                <article class="prez">
+                    <p>Il te manque une case ! (ITMC) est un site communautaire qui regroupe une large bibliothèque de
+                        Bande Déssinée en tout genre, Comics, Manga, Graphic Novel et bien entendu les grands classiques
+                        !</p>
+                    <p>Tintin, Asterix, Michel Vaillant mais aussi Rick Grimms et Batman (entre autres !) vous attendent
+                        !</p>
+                    <p>Ici le principe est simple, vous pouvez consulter la bibliothèque à la recherche d'une BD, voir
+                        sa fiche et les commentaires des lecteurs.<br>
+                        Et une fois inscrit, vous pourez l'ajouter à votre bibliothèque en ligne !</p>
+                    <p>Vous ne trouvez pas votre ouvrage préféré ? Pas de problème ! Ajoutez là grâce au formulaire
+                        d'ajout et participez à faire grandir le site !</p>
+                </article>
+            </div>
+        </div>
+        <!-- le cadre pour les ajout récent contient une image de la bd et sa description-->
+        <div class="col-lg-4 col-12 offset-lg-7 order-3 order-lg-3 bg-white p-4 my-2 comic_case">
+            <div class="">
+                <div class="text-center">
+                    <h2 class="text-uppercase style_title">ajout récent</h2>
                 </div>
+                <!-- le list-unstyled permet de lister nos image et leur text en colomn et grace a la classe media on ajoute du text à coté de notre page -->
+                <ul class="list-unstyled">
+                    <li class="media">
+                        <!--1st image et son text-->
+                        <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
+                        <div class="media-body comic_text">
+                            <p class="mt-0 mb-1">List-based media object</p>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus
+                            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+                            nisi vulputate
+                            fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+
+                    </li>
+                    <!--2nd image et son text-->
+                    <li class="media my-4">
+                        <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
+                        <div class="media-body">
+                            <p class="mt-0 mb-1">List-based media object</p>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus
+                            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+                            nisi vulputate
+                            fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </li>
+                    <!--3rd image et son text-->
+                    <li class="media">
+                        <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
+                        <div class="media-body">
+                            <p class="mt-0 mb-1">List-based media object</p>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus
+                            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+                            nisi vulputate
+                            fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </li>
+                    <!--4th image et son text-->
+                    <li class="media my-4">
+                        <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
+                        <div class="media-body">
+                            <p class="mt-0 mb-1">List-based media object</p>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus
+                            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+                            nisi vulputate
+                            fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </li>
+
+                    <li class="media my-4">
+                        <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
+                        <div class="media-body">
+                            <p class="mt-0 mb-1">List-based media object</p>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus
+                            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+                            nisi vulputate
+                            fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </li>
+                    <li class="media my-4">
+                        <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="70rem">
+                        <div class="media-body">
+                            <p class="mt-0 mb-1">List-based media object</p>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus
+                            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+                            nisi vulputate
+                            fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
