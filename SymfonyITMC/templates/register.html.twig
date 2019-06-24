@@ -3,79 +3,85 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-<main class="mb-4">
-    <div class="container">
+
+    <main class="container my-4">
         <div class="row">
-            <h1 class="col-12 text-center my-4">Inscription</h1>
+            <h1 class="col-12 col-lg-8 offset-lg-2 text-center mb-4 style_title bg-white text-center p-4 comic_case">Inscription</h1>
         </div>
 
         <div class="row">
             {% if success is defined %}
-                <p class="alert alert-success col-12 text-center">Compte créé avec succès ! (Email envoyé pour activation du compte)</p>
-            {% else %}
-            <form class="form" action="{{ path('register')}}" method="POST">
-                <div class="form-group">
-                    <label for="">Nom</label>
-                    <input type="text" placeholder="Nom" id="name" name="lastname" class="form-control" />
-                    {% if errorsList.invalidLastname is defined %}
+            <p class="alert alert-success col-12 text-center">Compte créé avec succès ! (Email envoyé pour activation du
+                compte) <br> <a href="{{ path('home') }}">Retour à L'accueil</a> </p>
+                {% else %}
+                <div class="col-12 col-lg-6 offset-lg-3 bg-white bg-light p-4 comic_case">
+                    <form class="form comic_text" action="{{ path('register')}}" method="POST">
+                            <p>Tout les champs sont obligatoires pour valider l'inscription</p>
+                    <div class="form-group">
+                        <label for="">Nom</label>
+                        <input type="text" placeholder="votre nom" id="name" name="lastname" class="form-control" />
+                        {% if errorsList.invalidLastname is defined %}
                         <p class="text-danger">Nom invalide</p>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label for="">Prenom</label>
-                    <input type="text" placeholder="Prénom" id="firstname" name="firstname" class="form-control" />
-                    {% if errorsList.invalidFirstname is defined %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="">Prénom</label>
+                        <input type="text" placeholder="votre prénom" id="firstname" name="firstname" class="form-control" />
+                        {% if errorsList.invalidFirstname is defined %}
                         <p class="text-danger">Prénom invalide</p>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label for="">Pseudo</label>
-                    <input type="text" placeholder="Pseudo" id="pseudo" name="pseudo" class="form-control" />
-                    {% if errorsList.invalidPseudo is defined %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="">Pseudo</label>
+                        <input type="text" placeholder="votre pseudo" id="pseudo" name="pseudo" class="form-control" />
+                        {% if errorsList.invalidPseudo is defined %}
                         <p class="text-danger">Pseudo invalide</p>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input type="email" placeholder="Email" id="email" name="email" class="form-control" />
-                    {% if errorsList.invalidEmail is defined %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="">Email</label>
+                        <input type="email" placeholder="exemple@email.com" id="email" name="email" class="form-control" />
+                        {% if errorsList.invalidEmail is defined %}
                         <p class="text-danger">Email invalide</p>
-                    {% endif %}
-                    {% if errorsList.emailAlreadyUsed is defined %}
+                        {% endif %}
+                        {% if errorsList.emailAlreadyUsed is defined %}
                         <p class="text-danger">Email déjà utilisé</p>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label for="">Mot de passe</label>
-                    <input type="password" placeholder="Votre mot de passe" id="password" name="password" class="form-control" />
-                    {% if errorsList.invalidPassword is defined %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="">Mot de passe : (8 caractères min dont une minuscule, une majuscule et un chiffre)</label>
+                        <input type="password" placeholder="Votre mot de passe, ex: Azerty123 " id="password" name="password"
+                            class="form-control" />
+                        {% if errorsList.invalidPassword is defined %}
                         <p class="text-danger">Mot de passe invalide</p>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label for="">Répéter le mot de passe</label>
-                    <input type="password" placeholder="Répéter le mot de passe" id="confirmPassword" name="confirmPassword" class="form-control" />
-                    {% if errorsList.invalidPasswordConfirm is defined %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="">Répéter le mot de passe</label>
+                        <input type="password" placeholder="Répéter votre mot de passe" id="confirmPassword"
+                            name="confirmPassword" class="form-control" />
+                        {% if errorsList.invalidPasswordConfirm is defined %}
                         <p class="text-danger">Confirmation invalide</p>
-                    {% endif %}
-                </div>
+                        {% endif %}
+                    </div>
 
-                <!-- zone de recaptcha-->
-                <div class="form-group">
-                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_public_key }}"></div>
-                    {% if errorsList.captchaInvalid is defined %}
+                    <!-- zone de recaptcha-->
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_public_key }}"></div>
+                        {% if errorsList.captchaInvalid is defined %}
                         <p class="text-danger">Veuillez remplir le captcha</p>
-                    {% endif %}
-                </div>
+                        {% endif %}
+                    </div>
 
-                <button class="btn btn-dark float-right validation_button" type="submit">Valider</button>
-            </form>
+                    <button class="btn btn-success col-12 col-lg-6 p-4 p-lg-2" type="submit">Valider</button>
+                </form>
+            </div>
             {% endif %}
         </div>
-    </div>
-</main>
+    </main>
+
 {% endblock %}
 
 {% block javascripts %}
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}

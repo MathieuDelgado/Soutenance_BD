@@ -1,85 +1,77 @@
-/*importation de la police des titre*/
-@font-face{
-    font-family: "Adventure.otf";
-    src: url('../fonts/Adventure.otf');
+/*Mise en forme generale
+/*style du body*/
+.style_body {
+    /*background-color:#cad3a9;*/
+    font-family: 'Roboto', sans-serif;
 }
 
 /*classe de style des titre*/
 .style_title{
     font-family: 'Adventure.otf', Arial, Helvetica, sans-serif;
-    font-size: 4rem;
+    font-size: 3.8rem;
     color: #0c2538;
 }
-/*creer une classe pour le body pour éviter de ciblé la balise dixit Matou*/
-body {
-    background-color:#cad3a9;
-    font-family: 'Roboto', sans-serif;
+
+/* Couleur de fond des navbar (HEADER et FOOTER) */
+.bg_color_dkblue{
+    background-color: rgba(12, 37, 56, 0.9);
 }
 
-/*style des bouton de validation formulaire*/
-.validation_button{
-    background-color: #638270;
-}
 /* HEADER  */
-    /* Taille logo navbar ITMC */
-    #index_logo_itmc{
-        width: 120px;
-    }
-    /* Couleur de fond du Header */
-    .header-color{
-        background-color: #0c2538;
-        font-size: 1.2rem;
-    }
-
-
-/* FOOTER */
-    /* Pour que le Footer soit toujours en pied de page */
-        html{
-            height: 100%;
-        }
-        main{
-            min-height: 100%;
-            width: 100%;
-        }
-        footer{
-            position: relative;
-
-            bottom: 0;
-
-            left: 0;
-
-            right: 0;
-
-            width: 100%;
-
-            padding-bottom: 1rem;
-        }
-
-        .pt-2, .py-2 {
-            margin-top: 2em !important;
-            padding-bottom: 1em !important ;
-        }
-    /* Couleur de fond du Footer */
-    .bg_color_dkblue{
-        background-color: #0c2538;
-    }
-
-/* debut Style de Kamal */
-
-.form-inscription{
-    max-width: 80%;
+/* Taille logo navbar ITMC */
+#index_logo_itmc{
+    width: 120px;
 }
 
-.carrecent {
-    margin-top: 15px;
+/* taille de police pour le HEADER */
+.header_ft_size{
+    font-size: 1.2rem;
+}
+/* HEADER END */
+
+/* FOOTER START */
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+  }
+  body {
+    /* Margin bottom by footer height */
+    margin-bottom: 180px;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 180px;
+  }
+
+/* FOOTER END */
+
+/*style de la prez du site*/
+.prez{
+    font-family: 'Comic_book.otf', Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    color: #0c2538;
+}
+.comic_text{
+    font-family: 'Comic_book.otf', Arial, Helvetica, sans-serif;
 }
 
-.background {
-    background: #fff;
+/*look case de BD des éléments*/
+.comic_case{
+    border:5px solid black;
 }
-/* fin Style de Kamal */
 
+/*styles des etoile de vote*/
 
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+@media screen and (max-height: 575px){
+}
 /* debut style BDBDD */
 
 .nav_bar_library{
@@ -106,3 +98,41 @@ body {
 
 /* fin style BDBDD */
 
+/*Style de la page d'une BD*/
+/*padding negatif pour aligné les éléments*/
+.p_neg{
+    
+}
+
+@media screen and (max-height: 575px){
+    body {
+        /* Margin bottom by footer height */
+        margin-bottom: 400px;
+    }
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 400px;
+    }
+    
+    /*Captcha responsive*/
+    #rc-imageselect,
+    .g-recaptcha {
+        transform:scale(0.77);
+        transform-origin:0;
+        transform:scale(0.77);
+        transform-origin:0 0;
+        -webkit-transform:scale(0.77);
+        transform:scale(0.77);
+        -webkit-transform-origin:0 0;
+        transform-origin:0 0;
+    }
+
+    /*titre responsive*/
+    .style_title{
+        font-size: 3rem;
+    }
+    
+}

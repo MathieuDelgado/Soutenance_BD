@@ -1,67 +1,75 @@
 {% extends "base.html.twig" %}
 
-{% block title %}  {% endblock %}
+{% block title %}{{ book.getTitle() }}{% endblock %}
 
 {% block body %}
 
 
-    <!-- <p class="alert alert-danger col-12">BD inexistante !</p> -->
+<!-- <p class="alert alert-danger col-12">BD inexistante !</p> -->
 
-    
-    <h1 class="text-center"> {{ book.getTitle() }} </h1>
-    <h2 class="text-center"> {{ book.getAuthor() }} - {{ book.getIllustrator() }} - {{ book.getEditor() }} </h2>
-
-
-    <div class="container">
-        <article class="row AfficheUneBD_article">
-            <div class="col-lg-4 px-0">
-            <!-- PB l'image ne se colle pas dans l'espace à droite quand on est en talle sm, malgré mon mx-auto... -->
-                <div class="row col-md-10 offset-1 ">
-                    <img src="{{book.getImgUrl()}}" class="affichageUneBD col-12 pt-3" alt="Jaquette" title="nom_de_la_BD" />
-                    <button type="button" class="btn btn-secondary btn-lg col-7 mx-auto my-4 ">Ajouter à ma bibliothèque</button>
-                </div>
-            </div>
-            <div class="col-lg-8 ">
-                <div>
-                    <p class="profil_p my-3"> {{ book.getSynopsis() }} </p> 
-                </div>
-            </div>
-            <hr>
-        </article>
+<main class="container my-4">
+    <div class="row bg-white comic_case my-2 p-4">
+        <h1 class="col-12 text-center style_title"> {{ book.getTitle() }} </h1>
+        <h2 class="col-12 text-center"> {{ book.getAuthor() }} - {{ book.getIllustrator() }} - {{ book.getEditor() }}
+        </h2>
     </div>
+
+    <article class="row">
+        <div class="col-lg-4 comic_case bg-white mb-2 m-lg-2 ">
+            <!-- PB l'image ne se colle pas dans l'espace à droite quand on est en talle sm, malgré mon mx-auto... -->
+            <div class="row">
+                <img src="{{book.getImgUrl()}}" class="col-12 pt-3" alt="couverture" title="nom_de_la_BD" />
+                <button type="button" class="btn btn-secondary btn-lg col-7 mx-auto my-4 ">Ajouter à ma
+                    bibliothèque</button>
+            </div>
+        </div>
+        <div class="col-lg-7 comic_case bg-white mb-2 m-lg-2">
+            <div class="row p-2 p-lg-4">
+                <h3 class="col-12">Résumé</h3>
+                <p class="my-3"> {{ book.getSynopsis() }} </p>
+            </div>
+        </div>
+        <hr>
+    </article>
     <!-- fin de l'article -->
 
-
-
-
-
-
-
-    <!-- partie commentaire -->
-    <div class="container ">
-        <div class="mt-2">
-        <div class="row AfficheUneBD_avis mt-4">
-                <div class="col-lg-2">
-                    <div class="row mx-auto">
-                        <i class="fas fa-user fa-5x col-12 pt-4 ml-3 "></i>
-                    </div>
-                </div>
-                <p class="col-lg-9 my-3">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
-                </p>
+    <!-- partie commentaire a repeter avec un forIn -->
+    <div class="row comic_case bg-white my-2">
+        <div class="col-lg-2">
+            <i class="fas fa-user fa-5x col-12 pt-4 ml-3"></i>
         </div>
-        <div class="row AfficheUneBD_avis mt-4">
-                <div class="col-lg-2">
-                    <div class="row mx-auto">
-                        <i class="fas fa-user fa-5x col-12 pt-4 ml-3"></i>
-                    </div>                    
-                </div>
-                <p class="col-lg-9 my-3">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                </p>
-        </div>
+        <div class="col-lg-9 my-3">
+            <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+                rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+            </p>
         </div>
     </div>
+    <div class="row comic_case bg-white my-2">
+        <div class="col-lg-2">
+            <i class="fas fa-user fa-5x col-12 pt-4 ml-3"></i>
+        </div>
+        <div class="col-lg-9 my-3">
+            <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+                rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+            </p>
+        </div>
+    </div>
+    <div class="row comic_case bg-white my-2">
+        <div class="col-lg-2">
+            <i class="fas fa-user fa-5x col-12 pt-4 ml-3"></i>
+        </div>
+        <div class="col-lg-9 my-3">
+            <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+                rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+            </p>
+        </div>
+    </div>
+
+</main>
 {% endblock %}
-
-

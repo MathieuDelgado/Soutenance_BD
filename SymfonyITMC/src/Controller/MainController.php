@@ -28,8 +28,12 @@ class MainController extends AbstractController
      */
     public function home()
     {
+        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+        $book = $bookRepo->findOneById(1);
 
-        return $this->render('home.html.twig');
+        return $this->render('home.html.twig', array(
+            'book'=>$book
+        ));            
     }
 
     /**
@@ -272,10 +276,6 @@ class MainController extends AbstractController
 
     }
 
-<<<<<<< HEAD
-}
-
-=======
 
     /**
      * @Route("/detail-de-la-BD/{idBook}/", requirements={"name"="[1-9][0-9]{0,10}"}, name="displayOneBD")
@@ -292,4 +292,3 @@ class MainController extends AbstractController
              ));            
     }
 }
->>>>>>> origin/master

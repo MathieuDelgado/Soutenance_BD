@@ -9,12 +9,27 @@
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <!-- déclaration de la police dans la base pour la récupérer sur toute les pages du site-->
+        <style type="text/css">
+            @font-face{
+                font-family: "Adventure.otf";
+                src: url({{ asset('fonts/Adventure.otf') }});
+            }
+            @font-face{
+                font-family: "Comic_book.otf";
+                src: url({{ asset('fonts/Comic_book.otf') }});
+            }
+            .site_bg{
+                background-image: url({{ asset('img/site_background-2.jpg') }});
+                background: contain repeat-y;
+            }
+        </style>
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    <body class="style_body site_bg">
         <!-- Navbar/Haut de page -->
 	<header class="text-light">
-            <nav class="navbar navbar-expand-lg navbar-light header-color ">
+            <nav class="navbar navbar-expand-lg navbar-light header_ft_size bg_color_dkblue">
                 <!-- Logo du site cliquable qui redirige sur la page d'accueil -->
                 <a class="navbar-brand" href="#"><img src="#" alt="LOGO" id="index_logo_itmc"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -25,15 +40,15 @@
                     <!-- Bouton-lien "Accueil" et "Bibliothèque" -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item mx-2">
-                            <a class="nav-link text-light font-weight-bold" href="{{ path('home')}}">Accueil</a>
+                            <a class="nav-link text-light font-weight-bold" href="{{ path('home')}}"><i class="fas fa-home mr-2"></i>Accueil</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link text-light font-weight-bold" href="#">Bibliothèque</a>
+                            <a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-book mr-2"></i>Bibliothèque</a>
                         </li>
                         {% if (app.session.has('account')) and (app.session.get('account', 'User.admin')) %}
                             
                         <li class="nav-item mx-2">
-                            <a class="nav-link text-light font-weight-bold" href="{{ path('admin') }}">Page Admin</a>
+                            <a class="nav-link text-light font-weight-bold" href="{{ path('admin') }}"><i class="fas fa-cog mr-2"></i>Page Admin</a>
                         </li>
 
                         {% endif %}
@@ -41,10 +56,9 @@
                     <ul class="navbar-nav justify-content-end">
                         <!-- Champ de recherche et validation -->
                         <!-- Champ texte de recherche -->
-                        <li class="nav-item mx-2  mt-auto">
-                            <div class="input-group mb-2">
-                                <input class="form-control  my-lg-0" type="search" placeholder="Rechercher"
-                                    aria-label="Search">
+                        <li class="nav-item mx-2 my-auto">
+                            <div class="input-group">
+                                <input class="form-control my-lg-0" type="search" placeholder="Rechercher" aria-label="Search">
                                 <!-- Bouton de validation -->
                                 <div class="input-group-prepend">
                                     <button class="btn btn-outline-success my-sm-0 rounded-right" type="submit"
@@ -57,20 +71,20 @@
                         {% if app.session.has('account') %}
                         <div class="dropdown ">
                                 <button class="btn btn-secondary dropdown-toggle text-light font-weight-bold bg_color_dkblue" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="far fa-user-circle mr-1"></i>Profile
+                                    <i class="far fa-user-circle mr-2"></i>Profile
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right bg_color_dkblue" aria-labelledby="dropdownMenu2">
-                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="far fa-user mr-1"></i>Mon profile</a></button>
-                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-user-edit mr-1"></i>Modifier mon profile</a></button>
-                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="{{ path('logout') }}"><i class="fas fa-power-off mr-1"></i>Deconnexion</a></button>
+                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="far fa-user mr-2"></i>Mon profil</a></button>
+                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-user-edit mr-2"></i>Modifier mon profil</a></button>
+                                  <button class="dropdown-item" type="button"><a class="nav-link text-light font-weight-bold" href="{{ path('logout') }}"><i class="fas fa-power-off mr-2"></i>Déconnexion</a></button>
                                 </div>
                               </div>
                         {% else %}
                             <li class="nav-item mx-2">
-                                <a class="nav-link text-light font-weight-bold" href="{{ path('register') }}"><i class="fas fa-user-plus mr-1"></i>Inscription</a>
+                                <a class="nav-link text-light font-weight-bold" href="{{ path('register') }}"><i class="fas fa-user-plus mr-2"></i>Inscription</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link text-light font-weight-bold" href="{{ path('login') }}"><i class="far fa-user mr-1"></i>Connexion</a>
+                                <a class="nav-link text-light font-weight-bold" href="{{ path('login') }}"><i class="far fa-user mr-2"></i>Connexion</a>
                             </li>
                         {% endif %}
                     </ul>
@@ -81,9 +95,9 @@
         {% block body %}{% endblock %}
     
        <!-- Pied de page -->
-        <footer class="bg_color_dkblue text-light footer mt-auto py-3">
-            <div class="">
-                <div class="row mx-1">
+        <footer class="bg_color_dkblue text-light py-3 footer">
+
+                <div class="row mx-2">
                     <div class="col-sm-3">
                         <h5>Get started</h5>
                         <ul>
@@ -106,11 +120,11 @@
                         </ul>
                     </div>
                     <div class="col-sm-3">
-                        <button type="button" class="btn btn-default validation_button">Nous contacter</button>
+                        <button type="button" class="btn btn-default btn-info">Nous contacter</button>
                     </div>
                 </div>
-            </div>
-            <div class="footer-copyright">
+    
+            <div class="row m-2">
                 <p>© 2019 Copyright Text </p>
             </div>
         </footer>
