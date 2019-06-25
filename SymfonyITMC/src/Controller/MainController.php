@@ -305,31 +305,29 @@ class MainController extends AbstractController
 
 
     /**
-     * @Route("/bdTeque-par-titre/", name = "bdbddByTitle")
+     * @Route("/bdThèque-par-titre/", name = "bdbddByTitle")
      * page de la bibliothèque général trié par titre
      */
      public function displayAllBDByTitle()
     {
-        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
-        $books = $bookRepo->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.title ASC');
+        $books = $query->getResult();
 
         return $this->render('bdbddByTitle.html.twig', array(
             'books'=> $books
         ));
     }
 
-
     /**
-     * @Route("/bdTeque-par-auteur/", name = "bdbddByAuthor")
+     * @Route("/bdThèque-par-auteur/", name = "bdbddByAuthor")
      * page de la bibliothèque général trié par Auteur
      */
     public function displayAllBDByAuthor()
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.author DESC');
+        $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.author ASC');
         $books = $query->getResult();
-
-        dump($books);
 
         return $this->render('bdbddByAuthor.html.twig', array(
             'books'=> $books
@@ -337,7 +335,117 @@ class MainController extends AbstractController
     }
 
 
+    /**
+     * @Route("/bdThèque-par-editeur/", name = "bdbddByEditor")
+     */
+    public function displayAllBDByEditor()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.editor ASC');
+        $books = $query->getResult();
+        return $this->render('bdbddByEditor.html.twig', array(
+            'books'=> $books
+        ));
+    }
 
+
+
+    /**
+     * @Route("/contactez-nous/", name="contact")
+     * Page de contact
+     */
+    public function contact(Request $request, Swift_Mailer $mailer)
+    {   
+        // Si le formulaire a bien été cliqué 
+        if($request->isMethod('POST'))
+        {
+            // On récupère les champs de formulaire 
+            $email = $request->request->get('email');
+            $subject = $request->request->get('subject');
+            $content = $request->request->get('content');
+
+            // Bloc des vérifs
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+            {
+                $errors['invalidEmail'] = true;
+            }
+
+            if (!preg_match('#^[a-z A-Z 0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s\,\;\:\!\?\@]{2,100}$#', $subject)) 
+            {
+                $errors['invalidSubject'] = true ;
+            }
+
+            if (!preg_match('#^[a-z A-Z 0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s\,\;\:\!\?\@]{2,500}$#', $content)) 
+            {
+                $errors['invalidContent'] = true ;
+            }
+
+            if (!isset($errors)) 
+            {
+                $message= (new Swift_Message('Email de contact'))
+                    ->setSubject($subject)
+                    ->setFrom($email)
+                    ->setTo("boissey265@gmail.com")
+                    ->setBody(
+                        $this->renderView('emails/contactEmail.html.twig', array(
+                            "content" => $content,
+                            "subject" => $subject,
+                            
+                        )),
+                        'text/html'
+                        )
+                    ->addPart(
+                        $this->renderView('emails/contactEmail.txt.twig', array(
+                            "content" => $content,
+                            "subject" => $subject,
+                        )),
+                        'text/plain'
+                    )
+                ;
+                $status = $mailer->send($message);
+                if($status)
+                {
+                    return $this->render('contact.html.twig', array('success' => true));
+                } else
+                {
+                    $errors['errorMail'] = true;
+                }
+            }
+        }
+       
+        if(isset($errors)){
+            return $this->render('contact.html.twig', array('errorsList' => $errors));
+        }
+        
+        return $this->render('contact.html.twig');
+    }
+
+    /**
+     * @Route("/qui-sommes-nous/", name="about_us")
+     * Page d'information sur qui nous sommes
+     */
+    public function about_us()
+    {
+        return $this->render('about_us.html.twig');
+    }
+
+    /**
+     * @Route("/plan-du-site/", name="sitemap")
+     * Page de plan du site 
+     */
+    public function sitemap()
+    {
+        return $this->render('sitemap.html.twig');
+    }
+
+    /**
+     * @Route("/mentions-legales/", name="mentions_legales")
+     * Page de mentions légales
+     */
+    public function mentions_legales()
+    {
+        return $this->render('mentions_legales.html.twig');
+    }
 }
 
 

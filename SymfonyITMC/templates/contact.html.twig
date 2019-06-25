@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Contactez-nous {% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-2">
+                <div class="">
+                    <form class="form-horizontal" action="" method="POST">
+                        <fieldset>
+                        {% if success is defined %}
+                            <div class="pt-2">
+                                <p class="alert alert-success col-12 text-center"> Votre message a bien été envoyé! </p>
+                            </div>
+                        {% else %}
+                            <legend class="text-center pt-5"> Nous contacter: </legend>
+                            <!-- Email input-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="email"> Votre email*: </label>
+                                <div class="col-md-12">
+                                    <input id="email" name="email" type="text" placeholder="Email" class="form-control">
+                                </div>
+                                {% if errorsList.invalidEmail is defined %}
+                                    <div class="col-12 pt-1">
+                                        <p class="alert alert-danger col-12 text-center">Email invalide</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- Sujet input-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="name"> Sujet du message*:     </label>
+                                <div class="col-md-12">
+                                    <input name="subject" type="text" placeholder="Objet" class="form-control">
+                                </div>
+                                {% if errorsList.invalidSubject is defined %}
+                                    <div class="col-12 pt-1">
+                                        <p class="alert alert-danger col-12 text-center">Sujet invalide, (Sujet compris entre 2 et 100 caractères, les caractères spéciaux sont interdits! ) </p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- Message body -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="content"> Votre message*: </label>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" id="content" name="content" placeholder="Entrez votre message..." rows="5"></textarea>
+                                </div>
+                                {% if errorsList.invalidContent is defined %}
+                                    <div class="col-12 pt-1">
+                                        <p class="alert alert-danger col-12 text-center">Contenu invalide, (Contenu compris entre 2 et 500 caractères, les caractères spéciaux sont interdits! ) </p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- Form actions -->
+                            <div class="form-group">
+                                <div class="col-md-12 text-right text-center">
+                                    <button type="submit" class="btn btn-success btn-lg"> Envoyer ✔ </button>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
