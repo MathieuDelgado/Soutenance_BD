@@ -47,4 +47,15 @@ class BookRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    //fonction searchByPartialTitle qui permet à displaySearchBar d'aller chercher les variables LIKE "title"
+    public function searchByPartialTitle(string $partialTitle): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.title LIKE :val')
+            ->setParameter('val', '%' . $partialTitle . '%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -23,7 +23,7 @@ use Doctrine\ORM\EntityManager;
 use \Datetime;
 use \Swift_Mailer;
 use \Swift_Message;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class MainController extends AbstractController
 {
@@ -38,7 +38,7 @@ class MainController extends AbstractController
         $book = $bookRepo->findOneById(1);
 
         return $this->render('home.html.twig', array(
-            'book'=>$book
+            'book' => $book
         ));
     }
 
@@ -127,8 +127,7 @@ class MainController extends AbstractController
                         ->addPart(
                             $this->renderView('emails/activation.txt.twig', ['user' => $newUser]),
                             'text/plain'
-                        )
-                    ;
+                        );
 
                     $mailer->send($message);
 
@@ -157,13 +156,13 @@ class MainController extends AbstractController
         $user = $userRepo->findOneById($userId);
 
         // Si un compte a bien été trouvé, on continue, sinon erreur 404
-        if($user){
+        if ($user) {
 
             // Si le token du compte est bien le même token que passé en dans l'url on continue, sinon erreur 404
-            if($user->getRegisterToken() == $userToken){
+            if ($user->getRegisterToken() == $userToken) {
 
                 // Si le compte n'est pas déjà activé on continue, sinon erreur 404
-                if(!$user->getActive()){
+                if (!$user->getActive()) {
 
                     // On passe active de false à true sur le compte et on sauvegarde en BDD
                     $user->setActive(true);
@@ -172,21 +171,17 @@ class MainController extends AbstractController
 
                     // Affichage de la vue de la page qui affichera un message confirmant la bonne activation du compte
                     return $this->render('activate.html.twig');
-
                 } else {
 
                     throw new NotFoundHttpException('Déja activé');
                 }
-
             } else {
 
                 throw new NotFoundHttpException('Token pas bon');
             }
-
         } else {
             throw new NotFoundHttpException('Compte pas trouvé');
         }
-
     }
 
     /**
@@ -198,40 +193,40 @@ class MainController extends AbstractController
         // Récupération de la session
         $session = $this->get('session');
         // Si account existe en session, alors l'utilisateur est déjà connecté à un compte donc on le redirige sur la page d'accueil
-        if($session->has('account')){
+        if ($session->has('account')) {
             return $this->redirectToRoute('home');
         }
 
         // Si le formulaire a été cliqué
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
 
             // Recupération des données du formulaire avec l'objet $request
             $email = $request->request->get('email');
             $password = $request->request->get('password');
 
             // bloc des verifs
-            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $errors['invalidEmail'] = true;
             }
 
-            if(!preg_match('#^.{8,300}$#', $password)){
+            if (!preg_match('#^.{8,300}$#', $password)) {
                 $errors['invalidPassword'] = true;
             }
 
             // Si pas d'erreurs
-            if(!isset($errors)){
+            if (!isset($errors)) {
 
                 // Via le repository des utilisateurs, on récupère l'utilisateur ayant déjà l'adresse email entrée dans le formulaire
                 $userRepo = $this->getDoctrine()->getRepository(User::class);
                 $user = $userRepo->findOneByEmail($email);
 
                 // Si l'utilisateur a été trouvé, tout va bien c'est que le compte existe
-                if(!empty($user)){
+                if (!empty($user)) {
 
                     // Vérification que le mot de passe est bien le bon
-                    if(password_verify($password, $user->getPassword())){
+                    if (password_verify($password, $user->getPassword())) {
 
-                        if($user->getActive()){
+                        if ($user->getActive()) {
 
                             // Connexion de l'utilisateur
                             $session->set('account', $user);
@@ -243,7 +238,6 @@ class MainController extends AbstractController
                     } else {
                         $errors['badPassword'] = true;
                     }
-
                 } else {
                     $errors['notExist'] = true;
                 }
@@ -251,7 +245,7 @@ class MainController extends AbstractController
         }
 
         // Si il y a des erreurs, on charge la vue en lui envoyant ces erreurs en parametre
-        if(isset($errors)){
+        if (isset($errors)) {
             return $this->render('login.html.twig', array('errorsList' => $errors));
         }
 
@@ -264,11 +258,12 @@ class MainController extends AbstractController
      * @Route("/deconnexion/", name="logout")
      * Page de déconnexion
      */
-    public function logout(){
+    public function logout()
+    {
 
         // Si la personne n'est pas connectée, on la redirige vers la page de connexion
         $session = $this->get('session');
-        if(!$session->has('account')){
+        if (!$session->has('account')) {
             return $this->redirectToRoute('login');
         }
 
@@ -277,7 +272,6 @@ class MainController extends AbstractController
 
         // Appel de la vue deconnexion pour afficher un message indiquant la reussite de la deconnexion
         return $this->render('logout.html.twig');
-
     }
 
     /**
@@ -290,28 +284,28 @@ class MainController extends AbstractController
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
         $book = $bookRepo->findOneById($idBook);
-        
+
         $comments = $book->getComments();
 
 
         return $this->render('displayOneBD.html.twig', array(
-            'book'=>$book,
+            'book' => $book,
             'comments' => $comments
-        )); 
+        ));
     }
 
     /**
      * @Route("/bdtheque-par-titre/", name = "bdbddByTitle")
      * page de la bibliothèque général trié par titre
      */
-     public function displayAllBDByTitle()
+    public function displayAllBDByTitle()
     {
         $em = $this->getDoctrine()->getManager();
         //$query contient les livres de la bdd avec le nom de du titre croissant.
         $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.title ASC');
         $books = $query->getResult();
         return $this->render('bdbddByTitle.html.twig', array(
-            'books'=> $books
+            'books' => $books
         ));
     }
 
@@ -325,7 +319,7 @@ class MainController extends AbstractController
         $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.author ASC');
         $books = $query->getResult();
         return $this->render('bdbddByAuthor.html.twig', array(
-            'books'=> $books
+            'books' => $books
         ));
     }
 
@@ -338,7 +332,7 @@ class MainController extends AbstractController
         $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.editor ASC');
         $books = $query->getResult();
         return $this->render('bdbddByEditor.html.twig', array(
-            'books'=> $books
+            'books' => $books
         ));
     }
 
@@ -349,45 +343,59 @@ class MainController extends AbstractController
     {
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         //$books contient les 30 derniers livres insérés rangé par id décroissants
-        $books = $bookRepo->findBy(array(),array('id'=>'DESC'),30,0);
+        $books = $bookRepo->findBy(array(), array('id' => 'DESC'), 30, 0);
         return $this->render('bdbddByLast.html.twig', array(
-            'books'=> $books
+            'books' => $books
         ));
     }
-   
+
+    
+    /**
+     * @Route("/bdtheque-recherche/", name = "bdbddSearch")
+     */
+    public function displaySearchBar(Request $request)
+    {
+        $title = $request->query->get('s');
+        if(!empty($title)){
+            $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+            $books = $bookRepo->searchByPartialTitle($title);
+
+            return $this->render('bdbddSearch.html.twig', array(
+                'books' => $books
+            ));
+        }
+        return $this->render('bdbddSearch.html.twig');
+    }
+
+
     /**
      * @Route("/contactez-nous/", name="contact")
      * Page de contact
      */
     public function contact(Request $request, Swift_Mailer $mailer)
-    {   
+    {
         // Si le formulaire a bien été cliqué 
-        if($request->isMethod('POST'))
-        {
+        if ($request->isMethod('POST')) {
             // On récupère les champs de formulaire 
             $email = $request->request->get('email');
             $subject = $request->request->get('subject');
             $content = $request->request->get('content');
 
             // Bloc des vérifs
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-            {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $errors['invalidEmail'] = true;
             }
 
-            if (!preg_match('#^[a-z A-Z 0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s\,\;\:\!\?\@]{2,100}$#', $subject)) 
-            {
-                $errors['invalidSubject'] = true ;
+            if (!preg_match('#^[a-z A-Z 0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s\,\;\:\!\?\@]{2,100}$#', $subject)) {
+                $errors['invalidSubject'] = true;
             }
 
-            if (!preg_match('#^[a-z A-Z 0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s\,\;\:\!\?\@]{2,500}$#', $content)) 
-            {
-                $errors['invalidContent'] = true ;
+            if (!preg_match('#^[a-z A-Z 0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s\,\;\:\!\?\@]{2,500}$#', $content)) {
+                $errors['invalidContent'] = true;
             }
 
-            if (!isset($errors)) 
-            {
-                $message= (new Swift_Message('Email de contact'))
+            if (!isset($errors)) {
+                $message = (new Swift_Message('Email de contact'))
                     ->setSubject($subject)
                     ->setFrom($email)
                     ->setTo("boissey265@gmail.com")
@@ -395,33 +403,30 @@ class MainController extends AbstractController
                         $this->renderView('emails/contactEmail.html.twig', array(
                             "content" => $content,
                             "subject" => $subject,
-                            
+
                         )),
                         'text/html'
-                        )
+                    )
                     ->addPart(
                         $this->renderView('emails/contactEmail.txt.twig', array(
                             "content" => $content,
                             "subject" => $subject,
                         )),
                         'text/plain'
-                    )
-                ;
+                    );
                 $status = $mailer->send($message);
-                if($status)
-                {
+                if ($status) {
                     return $this->render('contact.html.twig', array('success' => true));
-                } else
-                {
+                } else {
                     $errors['errorMail'] = true;
                 }
             }
         }
-       
-        if(isset($errors)){
+
+        if (isset($errors)) {
             return $this->render('contact.html.twig', array('errorsList' => $errors));
         }
-        
+
         return $this->render('contact.html.twig');
     }
 
@@ -456,21 +461,22 @@ class MainController extends AbstractController
      * @Route("/ajouter-une-bd/", name="addComic")
      * page de creation d'une bd
      */
-    public function addComic(Request $request){
+    public function addComic(Request $request)
+    {
 
 
         //on verifie que le formulaire a été cliqué
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
 
             //recuperation des données
             $googleId = $request->request->get('book');
             dump($googleId);
             //bloc des verifs
-            if(!preg_match('#^.{12}$#',$googleId)){
+            if (!preg_match('#^.{12}$#', $googleId)) {
                 $errors['googleIdInvalid'] = true;
             }
 
-            if(!isset($errors)) {
+            if (!isset($errors)) {
 
                 $result = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=+id:' . $googleId);
                 $parsedResult = json_decode($result);
@@ -501,21 +507,18 @@ class MainController extends AbstractController
                         ->setIsbn($isbn)
                         ->setSynopsis($synopsis)
                         ->setImgUrl($imgUrl)
-                        ->setGoogleIdent($googleId)
-                    ;
+                        ->setGoogleIdent($googleId);
                     //On recupère le manager des entités
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($newBook);
                     $em->flush();
 
-                    return $this->render('addComic.html.twig', ['addComicSuccess'=>true]);
+                    return $this->render('addComic.html.twig', ['addComicSuccess' => true]);
                 } else {
-                    return $this->render('addComic.html.twig', ['errors'=> $errors]);
+                    return $this->render('addComic.html.twig', ['errors' => $errors]);
                 }
             }
         }
         return $this->render('addComic.html.twig');
     }
 }
-
-
