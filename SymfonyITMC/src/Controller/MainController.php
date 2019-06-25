@@ -240,8 +240,6 @@ class MainController extends AbstractController
                         } else {
                             $errors['notActive'] = true;
                         }
-
-
                     } else {
                         $errors['badPassword'] = true;
                     }
@@ -302,25 +300,23 @@ class MainController extends AbstractController
         )); 
     }
 
-
-
     /**
-     * @Route("/bdThèque-par-titre/", name = "bdbddByTitle")
+     * @Route("/bdtheque-par-titre/", name = "bdbddByTitle")
      * page de la bibliothèque général trié par titre
      */
      public function displayAllBDByTitle()
     {
         $em = $this->getDoctrine()->getManager();
+        //$query contient les livres de la bdd avec le nom de du titre croissant.
         $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.title ASC');
         $books = $query->getResult();
-
         return $this->render('bdbddByTitle.html.twig', array(
             'books'=> $books
         ));
     }
 
     /**
-     * @Route("/bdThèque-par-auteur/", name = "bdbddByAuthor")
+     * @Route("/bdtheque-par-auteur/", name = "bdbddByAuthor")
      * page de la bibliothèque général trié par Auteur
      */
     public function displayAllBDByAuthor()
@@ -328,15 +324,13 @@ class MainController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery('SELECT b FROM App\Entity\Book b ORDER BY b.author ASC');
         $books = $query->getResult();
-
         return $this->render('bdbddByAuthor.html.twig', array(
             'books'=> $books
         ));
     }
 
-
     /**
-     * @Route("/bdThèque-par-editeur/", name = "bdbddByEditor")
+     * @Route("/bdtheque-par-editeur/", name = "bdbddByEditor")
      */
     public function displayAllBDByEditor()
     {
@@ -348,8 +342,19 @@ class MainController extends AbstractController
         ));
     }
 
-
-
+    /**
+     * @Route("/bdtheque-dernier-ajout/", name = "bdbddByLast")
+     */
+    public function displayAllBDByLast()
+    {
+        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+        //$books contient les 30 derniers livres insérés rangé par id décroissants
+        $books = $bookRepo->findBy(array(),array('id'=>'DESC'),30,0);
+        return $this->render('bdbddByLast.html.twig', array(
+            'books'=> $books
+        ));
+    }
+   
     /**
      * @Route("/contactez-nous/", name="contact")
      * Page de contact
