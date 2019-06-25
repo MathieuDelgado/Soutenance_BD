@@ -98,12 +98,6 @@ html {
 
 /* fin style BDBDD */
 
-/*Style de la page d'une BD*/
-/*padding negatif pour aligné les éléments*/
-.p_neg{
-    
-}
-
 @media screen and (max-height: 575px){
     body {
         /* Margin bottom by footer height */

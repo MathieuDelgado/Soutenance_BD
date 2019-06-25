@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Ajouter une BD
+{% endblock %}
+
+{% block body %}
+<h1 class="comic_case comic_text">ajouter une bd</h1>
+    {#formulaire factice pour demarrer la requete AJAX#}
+<form>
+    <input placeholder="Livre..." type="text" id="bookSearchValue"><button id="bookSearch">Chercher</button>
+</form>
+
+<form action="{{ path('addComic') }}" method="POST">
+    <select name="book" >
+            <option id="optionResult" disabled selected>Aucun livre recherché</option>
+        </select>
+        <input type="submit">
+    </form>
+    <div id="status"></div>
+        {% if addComicSuccess is defined %}
+            <p class="alert alert-success col-12 text-center">BD ajoutée avec succès !</p>
+        {% endif %}
+
+        {% if errors is defined %}
+            <div class="col-12 alert alert-warning text-center">Erreur lors de l'ajout <a
+            href="{{ path('contact') }}">Contacter un administrateur</a></div>
+        {% endif %}
+
+
+    {% block javascripts %}
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+
+        var bookSearch = $('#bookSearch');
+
+
+        bookSearch.click(function(e){
+            e.preventDefault();
+
+            var bookSearchValue = $('#bookSearchValue').val();
+
+            var $query = $('#bookSearchValue').val();
+
+            // Si le nom de la BD recherchée est plus petit que 3 caractères, message d'erreur
+            if($query.length < 3){
+                $('#status').html('<p style="color:red">Veuillez mettre au moins 3 caractères</p>');
+            } else {
+
+                $('.book').html('');
+
+                $.ajax({
+                    url: 'https://www.googleapis.com/books/v1/volumes?q=+intitle:' + bookSearchValue,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data){
+
+                        $('.googleId').remove();
+
+                        console.log(data);
+                        var items=data.items
+                        //console.log(items)
+                        items.forEach((item) => {
+                            $('#optionResult').after(
+                                `<option name="googleId" class="googleId" value="`+ item.id + `">`+ item.volumeInfo.title +`</option>`
+                                )
+                        });
+
+                    }
+                });
+
+            }
+        });
+
+    </script>
+    {% endblock %}
+
+{% endblock %}

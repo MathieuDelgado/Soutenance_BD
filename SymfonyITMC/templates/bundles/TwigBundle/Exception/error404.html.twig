@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page Introuvable{% endblock %}
+
+{% block body %}
+    <div class="contain my-4">
+        <div class="row bg-white comic_case mx-1 my-2 p-4">
+            <h1 class="col-12 alert alert-danger text-center mb-4 style_title">ERREUR 404 !</h1>
+            <h2 class="text-center col-6 offset-3 comic_text"> Ressources non trouvées</h2>
+            <a class="col-6 offset-3 mt-4 btn" style="background-color: #2b434f; color:white" href="{{ path('home') }}">Cliquez ici pour
+                revenir à la page d'acceuil</a>
+        </div>
+        <div class="row mt-3">
+            <img src="{{asset('img/homer.jpg')}}" class="d-block p-0 img-fluid mx-auto col-6 comic_case" alt="texte alternatif de foufou">
+        </div>
+    </div>
+{% endblock %}

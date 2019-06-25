@@ -278,7 +278,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/detail-de-la-BD/{idBook}/", requirements={"name"="[1-9][0-9]{0,10}"}, name="displayOneBD")
+     * @Route("/detail-de-la-bd/{idBook}/", requirements={"name"="[1-9][0-9]{0,10}"}, name="displayOneBD")
      * Page détail d'une seule BD
      */
     public function displayOneBD($idBook)
@@ -294,5 +294,70 @@ class MainController extends AbstractController
             'comments' => $comments
         )); 
 
+    }
+
+    /**
+     * @Route("/ajouter-une-bd/", name="addComic")
+     * page de creation d'une bd
+     */
+    public function addComic(Request $request){
+
+
+        //on verifie que le formulaire a été cliqué
+        if($request->isMethod('POST')){
+
+            //recuperation des données
+            $googleId = $request->request->get('book');
+            dump($googleId);
+            //bloc des verifs
+            if(!preg_match('#^.{12}$#',$googleId)){
+                $errors['googleIdInvalid'] = true;
+            }
+
+            if(!isset($errors)) {
+
+                $result = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=+id:' . $googleId);
+                $parsedResult = json_decode($result);
+                $items = $parsedResult->items;
+
+
+                $title = isset($items[0]->volumeInfo->title) ? $items[0]->volumeInfo->title : 'inconnu';
+                $author = isset($items[0]->volumeInfo->authors[0]) ? $items[0]->volumeInfo->authors[0] : 'inconnu';
+                $illustrator = isset($items[0]->volumeInfo->authors[1]) ? $items[0]->volumeInfo->authors[1] : 'Inconnu';
+                $publisher = isset($items[0]->volumeInfo->publisher) ? $items[0]->volumeInfo->publisher : 'inconnu';
+                $isbn = isset($items[0]->volumeInfo->industryIdentifiers[1]->identifier) ? $items[0]->volumeInfo->industryIdentifiers[1]->identifier : 'inconnu';
+                $synopsis = isset($items[0]->volumeInfo->description) ? $items[0]->volumeInfo->description : 'inconnu';
+                $imgUrl = isset($items[0]->volumeInfo->imageLinks->thumbnail) ? $items[0]->volumeInfo->imageLinks->thumbnail : 'inconnu';
+
+                // Verif si existe pas
+                $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+
+                $bookIfExist = $bookRepo->findOneByIsbn($isbn);
+
+                if (empty($bookIfExist)) {
+
+                    $newBook = new Book();
+                    $newBook
+                        ->setTitle($title)
+                        ->setAuthor($author)
+                        ->setIllustrator($illustrator)
+                        ->setEditor($publisher)
+                        ->setIsbn($isbn)
+                        ->setSynopsis($synopsis)
+                        ->setImgUrl($imgUrl)
+                        ->setGoogleIdent($googleId)
+                    ;
+                    //On recupère le manager des entités
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($newBook);
+                    $em->flush();
+
+                    return $this->render('addComic.html.twig', ['addComicSuccess'=>true]);
+                } else {
+                    return $this->render('addComic.html.twig', ['errors'=> $errors]);
+                }
+            }
+        }
+        return $this->render('addComic.html.twig');
     }
 }
