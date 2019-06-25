@@ -511,6 +511,122 @@ class MainController extends AbstractController
         }
         return $this->render('addComic.html.twig');
     }
+
+    /**
+     * @Route("/ma-page-de-profil/", name="profil")
+     * Page d'affichage du profil utilisateur
+     */
+    public function userProfil()
+    {
+        //recuperation de la session
+        $session = $this->get('session');
+
+        //si account n'existe pas en session, alors l'utilisateur est redirigé vers la page d'accueil
+
+        // if (!$session->has('account')) {
+        //     return $this->redirectToRoute('home');
+        // }
+
+
+
+        return $this->render('userProfil.html.twig');
+    }
+
+    /**
+     * @Route("modifier-mon-profil", name="editProfil")
+     * Page de modifications des informations des données utilisateurs
+     */
+    public function editProfil(Request $request)
+    {
+        //recuperation de la session
+        $session = $this->get('session');
+
+        $email = $session->get('account')->getEmail();
+
+        //si account n'existe pas en session, alors l'utilisateur est redirigé vers la page d'accueil
+
+        // if (!$session->has('account')) {
+        //     return $this->redirectToRoute('home');
+        // }
+
+        //si le formulaire a bien été cliqué
+        if ($request->isMethod('POST')) {
+        //On récupère les données POST du formulaire
+            $updatePseudo = $request->request->get('pseudo');
+            $updateEmail = $request->request->get('email');
+            $updateConfirmEmail = $request->request->get('confirmEmail');
+            $oldPassword = $request->request->get('oldPassword');
+            $updatePassword = $request->request->get('newPassword');
+            $updateConfirmPassword = $request->request->get('confirmNewPassword');
+
+            $account = $session->get('account');
+            //bloc de verifs
+            //regex a utiliser [a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,120}
+            if(!preg_match('#^[a-zA-Z]{1,120}$#', $updatePseudo)) {
+                $errors['invalidPseudo'] = true;
+            }
+
+            if(!filter_var($updateEmail, FILTER_VALIDATE_EMAIL)) {
+                $errors['invalidEmail'] = true;
+            }
+            if($updateEmail != $updateConfirmEmail){
+                $errors['invalidEmailConfirm'] = true;
+            }
+            if(!empty($oldPassword)){
+                // le mot de passe ne correspond pas au mdp présent en bdd
+                if(!password_verify($oldPassword, $session->get('account')->getPassword())){
+                    $errors['invalidOldPassword'] = true;
+                }
+                //Validation du MdP : Au moins 8 caractères, dont une majuscule, une minuscule et un chiffre
+                if(!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$#', $updatePassword)) {
+                    $errors['invalidPassword'] = true;
+                }
+                // l'ancien mdp saisie est comparé au nouveau mdp
+                if($oldPassword == $updatePassword){
+                    $errors['sameUpdatePassword'] = true;
+                }
+                // l'ancien mdp stocké est comparé au nouveau mdp
+                if($account->getPassword() == $updatePassword){
+                    $errors['samePassword'] = true;
+                }
+                // le nouveau mdp est comparé à la confirmation
+                if($updatePassword != $updateConfirmPassword) {
+                    $errors['invalidPasswordConfirm'] = true;
+                }
+            }
+            //si aucune erreur
+            if(!isset($errors)) {
+                    
+                //On recupère le manager des entités
+                $em = $this->getDoctrine()->getManager();
+            
+                $updateUser = $session->get('account');
+
+                $updateUser = $em->merge($updateUser);
+                dump($updateUser);
+
+                $updateUser
+                    ->setPseudo($updatePseudo)
+                    ->setEmail($updateEmail);
+
+                if(!empty($oldPassword)){
+                    $updateUser
+                        ->setPassword(password_hash($updatePassword, PASSWORD_BCRYPT));
+                    }
+
+                $em->flush();
+
+                $session->set('account', $updateUser);
+
+                return $this->render('editProfil.html.twig', ['success' => true]);
+                    
+            } else {
+                return $this->render('editProfil.html.twig', ['errors' => $errors]);
+
+            }
+        }    
+        return $this->render('editProfil.html.twig');
+    }
 }
 
 

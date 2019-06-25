@@ -1,0 +1,128 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Modifier mon profil
+{% endblock title %}
+
+{% block body %}
+    
+    <!-- FormulairModifier mon profile de profil -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 col-sm-12 col-12">
+                <div class="card ">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Votre profil</h4>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% if success is defined %}
+                                <p class="alert alert-success col-12 text-center">Compte modifié avec succès ! </p>
+                                <p> <a href="{{ path('home')}}"> Retour à l'accueil</a></p>
+                            {% else %}
+                            <div class="col-md-12">
+                                <form method="POST" action="{{ path('editProfil') }}">
+                                    <!-- Ajouter avatar, uniquement fichiers png, jpeg, jpg -->
+                                    {# <div class="form-group">                                       
+                                        <div class="row">
+                                            <div class="col-12 col-sm-9 order-2 order-sm-1">
+                                                <label for="avatar" class="col-12 col-form-label font-weight-bold">Votre Avatar:</label> 
+                                                <div class="container">
+                                                <input id="avatar" name="avatar" placeholder="Avatar"  type="file" accept="image/png, image/jpeg, image/jpg">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-3 text-center order-1 order-sm-2">
+                                                <i class="fas fa-user-circle fa-5x align-middle"></i>
+                                            </div>   
+                                        </div>                                                                  
+                                    </div> #}
+                                    <!-- Pseudo -->
+                                    <div class="form-group row col-12">
+                                        <label for="pseudo" class="col-12 col-form-label font-weight-bold">Modifier votre pseudo :</label> 
+                                        <div class="col-12">
+                                        <input id="pseudo" name="pseudo" placeholder="Pseudo" class="form-control here"  type="text" value="{{ app.session.get('account').pseudo }}">
+                                        </div>
+                                    </div>
+                                        {% if errors.invalidPseudo is defined %}
+                                            <p style="color:red;"> Le pseudo doit contenir que des lettres </p>
+                                        {% endif %}
+
+                                    <!-- Adresse Email -->
+                                    <div class="form-group row col-12">
+                                        <label for="email" class="col-12 col-form-label font-weight-bold">Modifier votre adresse e-mail :</label> 
+                                        <div class="col-12">
+                                        <input id="email" name="email" placeholder="Email" autocomplete="off" class="form-control here"  type="text" value="{{ app.session.get('account').email }}">
+                                        </div>
+                                    </div>
+                                    {% if errors.invalidEmail is defined %}
+                                        <p style="color:red;"> L'email n'est pas valide </p>
+                                    {% endif %}
+                                    {% if errors.sameEmail is defined %}
+                                        <p style="color:red;"> L'email est  </p>
+                                    {% endif %}
+
+                                    <!-- Confimation Adresse Email   -->
+                                    <div class="form-group row col-12">
+                                        <label for="confirmEmail" class="col-12 col-form-label font-weight-bold">Confirmer votre nouvelle adresse e-mail :</label> 
+                                        <div class="col-12">
+                                        <input id="confirmEmail" name="confirmEmail"  autocomplete="off" placeholder="Confirmer votre email" class="form-control here"  type="text" value="{{ app.session.get('account').email }}">
+                                        </div>
+                                    </div>
+                                    {% if errors.invalidEmailConfirm is defined %}
+                                        <p style="color:red;"> La confirmation de l'email n'est pas valide </p>
+                                    {% endif %}
+                                    <!-- Ancien Mot de Passe -->
+                                    <div class="form-group row col-12">
+                                        <label for="oldPassword" class="col-12 col-form-label font-weight-bold">Entrer votre ancien mot de passe :</label> 
+                                        <div class="col-12">
+                                        <input id="oldPassword" name="oldPassword"  autocomplete="off" placeholder="Ancien mot de passe" class="form-control here" type="password" >
+                                        </div>
+                                    </div>
+                                    {% if errors.invalidOldPassword is defined %}
+                                        <p style="color:red;"> Ancien mot de passe invalide </p>
+                                    {% endif %}
+                                    <!-- Nouveau Mot de Passe -->
+                                    <div class="form-group row col-12">
+                                        <label for="newPassword" class="col-12 col-form-label font-weight-bold">Entrer votre nouveau mot de passe :</label> 
+                                        <div class="col-12">
+                                        <input id="newPassword" name="newPassword" autocomplete="off" placeholder="Nouveau mot de passe" class="form-control here" type="password" >
+                                        </div>
+                                    </div>
+                                    {% if errors.invalidPassword is defined %}
+                                        <p style="color:red;"> Mot de passe invalide </p>
+                                    {% endif %}
+                                    {% if errors.sameUpdatePassword is defined %}
+                                        <p style="color:red;"> Mot de passe non modifié </p>
+                                    {% endif %}
+                                    <!-- Confirmer Nouveau Mot de Passe -->
+                                    <div class="form-group row col-12">
+                                        <label for="confirmNewPassword" class="col-12 col-form-label font-weight-bold">Confirmer votre nouveau mot de passe :</label> 
+                                        <div class="col-12">
+                                        <input id="confirmNewPassword" name="confirmNewPassword" autocomplete="off" placeholder="Confirmez votre nouveau mot de passe" class="form-control here" type="password">
+                                        </div>
+                                    </div>
+                                    {% if errors.invalidPasswordConfirm is defined %}
+                                        <p style="color:red;"> Confirmation du nouveau mot de passe invalide </p>
+                                    {% endif %}
+                                    {% if errors.samePassword is defined %}
+                                        <p style="color:red;"> Confirmation du mot de passe identique à l'ancien </p>
+                                    {% endif %}
+                                    <!-- Bouton Mettre à jour le profil -->
+                                    <div class="form-group row col-12">
+                                        <div class="col-12 text-center">
+                                        <button name="submit" type="submit" class="btn btn-primary">Mettre à jour mon profil</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
