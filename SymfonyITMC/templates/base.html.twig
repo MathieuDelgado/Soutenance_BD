@@ -43,7 +43,7 @@
                             <a class="nav-link text-light font-weight-bold" href="{{ path('home')}}"><i class="fas fa-home mr-2"></i>Accueil</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link text-light font-weight-bold" href="#"><i class="fas fa-book mr-2"></i>Bibliothèque</a>
+                            <a class="nav-link text-light font-weight-bold" href="{{ path('bdbddByTitle') }}"><i class="fas fa-book mr-2"></i>Bibliothèque</a>
                         </li>
                         {# affichage du bouton pour page admin si droits attribués #}
                         {% if app.session.has('account') and app.session.get('account').admin == 1 %}

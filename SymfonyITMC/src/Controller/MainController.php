@@ -240,8 +240,6 @@ class MainController extends AbstractController
                         } else {
                             $errors['notActive'] = true;
                         }
-
-
                     } else {
                         $errors['badPassword'] = true;
                     }
