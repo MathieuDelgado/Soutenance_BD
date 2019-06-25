@@ -69,6 +69,11 @@ class Book
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=12)
+     */
+    private $googleIdent;
+
     public function __construct()
     {
         $this->id_user = new ArrayCollection();
@@ -246,6 +251,18 @@ class Book
                 $comment->setBook(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGoogleIdent(): ?string
+    {
+        return $this->googleIdent;
+    }
+
+    public function setGoogleIdent(string $googleIdent): self
+    {
+        $this->googleIdent = $googleIdent;
 
         return $this;
     }
