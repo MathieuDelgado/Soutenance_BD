@@ -275,15 +275,15 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/detail-de-la-bd/{idBook}/", requirements={"name"="[1-9][0-9]{0,10}"}, name="displayOneBD")
+     * @Route("/detail-de-la-bd/{titleBook}/", requirements={"name"="[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,1200}"}, name="displayOneBD")
      * Page détail d'une seule BD
      */
-    public function displayOneBD($idBook)
+    public function displayOneBD($titleBook)
     {
         //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
-        $book = $bookRepo->findOneById($idBook);
+        $book = $bookRepo->findOneByTitle($titleBook);
 
         $comments = $book->getComments();
 
