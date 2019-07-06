@@ -1,40 +1,42 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{% endblock %}
+{% block title %}Bibliothèque{% endblock %}
 
 {% block body %}
-<div class="">
-    <div class="container container_library px-0">
-        <ul class="nav nav-tabs nav_bar_library justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link " href="{{ path('addComic') }}">Ajouter une BD <i class="fas fa-plus"></i></a> 
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="{{path('bdbddByLast')}}">Dernier ajout</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="{{path('bdbddByTitle')}}">Par titre</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="{{path('bdbddByAuthor')}}">Par auteurs</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="{{path('bdbddByEditor')}}">Par éditeurs</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="#">Par genres</a>
-            </li>
-        </ul>
+<main class="container-fluid my-4">
+    <div class="row">
+        <nav class="col-lg-10 offset-lg-1 navbar navbar-expand-lg nav_bar_library comic_case bg-white comic_text">
+
+            <ul class="nav mx-auto nav_text_size">
+                <li class="nav-item">
+                    <a class="nav-link " href="{{ path('addComic') }}">Ajouter une BD <i class="fas fa-plus"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{path('bdbddByLast')}}">Dernier ajout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{path('bdbddByTitle')}}">Par titre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{path('bdbddByAuthor')}}">Par auteurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{path('bdbddByEditor')}}">Par éditeurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#">Par genres</a>
+                </li>
+            </ul>
+        </nav>
     </div>
-    <div class="container library_bgc" >   
-        <div class="row mt-4" id="lienTitleAlphC">
+    
+        <div class="row mt-4 offset-lg-1" id="lienTitleAlphC">
             {% for book in books %}
-                <div class="col-md-3 mb-2">
-                    <div class="card">
+                <div class="col-md-2 m-2 py-3 comic_case bg-white">
                         <a href="{{ path('displayOneBD', {titleBook : book.title}) }}">
-                            <img src=" {{book.getImgUrl()}}" class="img-fluid" alt="">
+                            <img src=" {{book.getImgUrl()}}" class="img-fluid" alt="{{book.title}}">
                         </a>
-                        <div class="ml-2">
+                        <div class="m-2 comic_text">
                             <p> {{book.title}} </p>
                             <p>{{book.author}}</p>
                             <p>{{book.editor}}</p>
@@ -48,11 +50,9 @@
                                 </span>
                             </p>
                         </div>
-                    </div>
                 </div> 
             {% endfor %}     
         </div>
-    </div>
-</div>
+</main>
 
 {% endblock %}

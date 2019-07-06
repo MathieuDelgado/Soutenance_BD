@@ -1,116 +1,72 @@
 {% extends "base.html.twig" %}
-{% block title %}
-    Mon profil
-{% endblock  %}
+
+{% block title %}Mon profil{% endblock  %}
+
 {% block body %}
-    
-<div class="container-fluide  profileBody">
-    
-    
-    <h1 class="text-center"> Profil : Mes BD </h1>
-    
+
+<main class="container-fluid my-4">
+    <div class="row">
+            <h1 class="col-12 col-lg-8 offset-lg-2 mb-4 style_title bg-white text-center p-4 comic_case"> Profil : Mes BD </h1>
+        <nav class="col-lg-8 offset-lg-2 navbar navbar-expand-lg nav_bar_library comic_case bg-white comic_text">
+            
+            <ul class="nav mx-auto nav_text_size">
+                <li class="nav-item">
+                    <a class="nav-link " href="{{path('bdbddByLast')}}">Dernier ajout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{path('bdbddByTitle')}}">Par titre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{path('bdbddByAuthor')}}">Par auteurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{path('bdbddByEditor')}}">Par éditeurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#">Par genres</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <aside class="Profil_Aside my-3 mt-5 ml-lg-5 col-lg-3 col-12">
         <div class="row">
-            <!-- Petit menu latéral gauche (ajouter BD, éditer profile) -->
-            <aside class="Profil_Aside my-3 mt-5 ml-lg-5 col-lg-3 col-12">
-                <div class="row">
-                    <!-- PB les deux boutons ne sont pas sur la même ligne pour les petite taille xs is sontsuperposés , malgré mon col-xs-5... Pourtant cela fonctionne avec le md -->
-                    <a href="{{ path('addComic') }}"><button type="button"
-                        class="btn btn-secondary my-1 mx-auto Profil_button col-lg-9 col-md-5 col-sm-5 col-xs-5"><i
-                            class="fas fa-plus-circle"></i>  Ajouter une
-                        BD</button></a>
-                        <a href="{{ path('editProfil')}}" > <button type="button"
-                        class="btn btn-secondary my-1 mx-auto Profil_button col-lg-9 col-md-5 col-sm-5 col-xs-5"><i
-                            class="fas fa-user-edit"></i> Editer
-                        profil</button></a>
+            <!-- PB les deux boutons ne sont pas sur la même ligne pour les petite taille xs is sontsuperposés , malgré mon col-xs-5... Pourtant cela fonctionne avec le md -->
+            <a href="{{ path('addComic') }}"><button type="button"
+                class="btn btn-secondary my-1 mx-auto Profil_button col-lg-9 col-md-5 col-sm-5 col-xs-5"><i
+                class="fas fa-plus-circle"></i> Ajouter une
+                BD</button></a>
+                <a href="{{ path('editProfil')}}"> <button type="button"
+                    class="btn btn-secondary my-1 mx-auto Profil_button col-lg-9 col-md-5 col-sm-5 col-xs-5"><i
+                    class="fas fa-user-edit"></i> Editer
+                    profil</button></a>
                 </div>
             </aside>
-            <!-- fin du petit menu latéral -->
-
-            <!-- Corp de la page avec l'onglet bootstrap (1eronglet 3 blocs de BD) -->
-                <!-- boutons des onglets : Titres, Auteur, Editeur, Genre -->
-                <div class="container container_library px-0 col-lg-7 col-12">
-                    <ul class="nav nav nav-tabs nav_bar_library justify-content-center">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tri par titres</a>
-                            <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Ordre alphabétique croissant</a>
-                            <a class="dropdown-item" href="#">Ordre alphabétique croissant</a>
-                        </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tri par auteurs</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Ordre alphabétique croissant</a>
-                            <a class="dropdown-item" href="#">Ordre alphabétique croissant</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tri par editeurs</a>
-                            <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Ordre alphabétique croissant</a>
-                            <a class="dropdown-item" href="#">Ordre alphabétique croissant</a>
-                        </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tri par genres</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Ordre alphabétique croissant</a>
-                            <a class="dropdown-item" href="#">Ordre alphabétique croissant</a>
-                        </div>
-                        </li>
-                    </ul>
-                    <div class="border  background">
-                        <ul class="list-unstyled">
-                            <li class="media mt-4 offset-1">
-                                <!--1st image et son text-->
-                                <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="180rem">
-                                <div class="media-body">
-                                    <h2>Titre:</h2>
-                                    <h2>Auteur:</h2>
-                                    <h2>Editeur:</h2>
-                                    <h2>Genre:</h2>
-                                    <p>lorem ipsum kupsum assum ....</p>
-                                    
-                                </div>
-                                
-                            </li>
-                            <hr width="75%" color="blue">
-                            <!--2nd image et son text-->
-                            <li class="media my-4 mt-4 offset-1">
-                                <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="180rem">
-                                <div class="media-body">
-                                    <h2>Titre:</h2>
-                                    <h2>Auteur:</h2>
-                                    <h2>Editeur:</h2>
-                                    <h2>Genre:</h2>
-                                    <p>lorem ipsum kupsum assum ....</p>
-                                </div>
-                            </li>
-                            <hr width="75%" color="blue">
-                            <!--3rd image et son text-->
-                            <li class="media mt-4 offset-1">
-                                <img class="mr-3" src="img/titeuf.jpg" alt="titeuf" width="180rem">
-                                <div class="media-body">
-                                <h2>titre</h2>
-                                <h2>Auteur:</h2>
-                                <h2>Editeur:</h2>
-                                <h2>Genre:</h2>
-                                <p>lorem ipsum kupsum assum ....</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                    
-            </div>
-            
-                    <!-- fin du blocs bd avec l'onglets-->
-                    
-                    <!-- ces divs d'onglets sont à remplir de la même façon que l'onglet précédent -->
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"></div>
-                    <div class="tab-pane fade" id="" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-                    <div class="tab-pane fade" id="" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-    </div>
-                    
-    {% endblock body %}
     
+    <div class="row mt-4 offset-lg-1" id="lienTitleAlphC">
+        {% for book in user.books %}
+        <div class="col-md-2 m-2 py-3 comic_case bg-white">
+            <a href="{{ path('displayOneBD', {titleBook : book.title}) }}">
+                <img src=" {{book.getImgUrl()}}" class="img-fluid" alt="{{book.title}}">
+            </a>
+                        <div class="m-2 comic_text">
+                            <p> {{book.title}} </p>
+                            <p>{{book.author}}</p>
+                            <p>{{book.editor}}</p>
+                            <p>Note :
+                                <span class="ml-4">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </span>
+                            </p>
+                        </div>
+                </div> 
+            {% endfor %}     
+        </div>
+</main>
+        
+
+{% endblock body %}

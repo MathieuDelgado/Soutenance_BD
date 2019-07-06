@@ -29,12 +29,14 @@ class MainController extends AbstractController
      */
     public function home()
     {
-        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
-        $book = $bookRepo->findOneById(1);
+        // utilisation du repository pour afficher les infos des BD en page d'accueil
+        $booksRepo = $this->getDoctrine()->getRepository(Book::class);
+        $books = $booksRepo->findAll();
 
         return $this->render('home.html.twig', array(
-            'book' => $book
+            'books' => $books
         ));
+
     }
 
     /**
@@ -559,18 +561,33 @@ class MainController extends AbstractController
      * @Route("/ma-page-de-profil/", name="profil")
      * Page d'affichage du profil utilisateur
      */
-    public function userProfil()
+    public function userProfil(Request $request)
     {
         //recuperation de la session
         $session = $this->get('session');
 
         //si account n'existe pas en session, alors l'utilisateur est redirigé vers la page d'accueil
 
-        // if (!$session->has('account')) {
-        //     return $this->redirectToRoute('home');
-        // }
+        if (!$session->has('account')) {
+            return $this->redirectToRoute('home');
+        }
 
+        // On recupère tout les livres de l'utilisateur
+        $currentUser = $session->get('account');
 
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        $userInfos = $userRepo->findOneById($currentUser->getId());
+
+        $books = $currentUser->getBooks();
+        dump($session);
+        dump($userInfos);
+        dump($books);
+
+        return $this->render('userProfil.html.twig', array(
+            'user' => $currentUser,
+            'books' => $books
+        ));
 
         return $this->render('userProfil.html.twig');
     }
