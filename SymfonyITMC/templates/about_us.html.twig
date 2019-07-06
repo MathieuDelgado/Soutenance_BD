@@ -1,39 +1,46 @@
 {% extends "base.html.twig" %}
 
-{% block title %} Qui sommes-nous ? {% endblock title %}
+{% block title %}Qui somme nous ?{% endblock title %}
 
 {% block body %}
-    <div class="col-8 offset-2">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col"> # </th>
-                    <th scope="col"> Vos questions: </th>
-                    <th scope="col"> Nos réponses: </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><p class="font-weight-bold"> L'équipe: </p></td>
-                    <td><p> Nous sommes une équipe de 5 développeurs/intégrateurs web juniors: Mathieu, Mathieu, Kamel, Romain et moi. </p></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td><p class="font-weight-bold"> Quel est l'intérêt d'ITMC? </p></td>
-                    <td><p> ITMC est un site communautaire de partage d'avis, de commentaires et de conseils réunissant les novices comme les passionés de bandes déssinées.</p></td>                 
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td><p class="font-weight-bold"> Pourquoi le nom ITMC? </p></td>
-                    <td><p> <strong>I</strong>l <strong>T</strong>e <strong>M</strong>anque une <strong>C</strong>ase, oui. </p></td>  
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td><p class="font-weight-bold"> Quelles sont vos ambitions pour ITMC? </p></td>
-                    <td><p> Se faire un max de thunes. </p></td>  
-                </tr>
-            </tbody>
+<main class="container-fluid my-4 comic_text">
+    <div class="row">
+        <h1 class="col-12 col-lg-8 offset-lg-2 mb-4 style_title bg-white text-center p-4 comic_case"> L'équipe derrière les cases </h1>
+
+
+        <div class="col-8 offset-2 comic_case bg-white">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"> # </th>
+                        <th scope="col"> Vos questions: </th>
+                        <th scope="col"> Nos réponses: </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><p class="font-weight-bold"> L'équipe: </p></td>
+                        <td><p> Nous sommes une équipe de 5 développeurs/intégrateurs web juniors: Mathieu, Mathieu, Kamel, Romain et moi. </p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><p class="font-weight-bold"> Quel est l'intérêt d'ITMC? </p></td>
+                        <td><p> ITMC est un site communautaire de partage d'avis, de commentaires et de conseils réunissant les novices comme les passionés de bandes déssinées.</p></td>                 
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td><p class="font-weight-bold"> Pourquoi le nom ITMC? </p></td>
+                        <td><p> <strong>I</strong>l <strong>T</strong>e <strong>M</strong>anque une <strong>C</strong>ase, oui. </p></td>  
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td><p class="font-weight-bold"> Quelles sont vos ambitions pour ITMC? </p></td>
+                        <td><p> Se faire un max de thunes. </p></td>  
+                    </tr>
+                </tbody>
         </table>
+        </div>
     </div>
+</main>
 {% endblock body %}
