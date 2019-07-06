@@ -46,5 +46,16 @@
         </div>
     </div>
     {% endfor %}
+
+    <div>
+            {% if errors.invalidContent is defined %}
+                <p class="text-danger">Contenu invalide</p>
+            {% endif %}
+        <form action="{{ path('displayOneBD',{ 'titleBook' : book.title }) }}" method="POST">
+
+            <textarea name="inputComment" rows="5" cols="100"></textarea>           
+            <p><input type="submit" value="commenter"></p>
+        </form>
+    </div>
 </main>
 {% endblock %}

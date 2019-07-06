@@ -15,11 +15,6 @@ use App\Entity\Comment;
 use App\Entity\Kind;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
-
-
-
-
-
 use \Datetime;
 use \Swift_Mailer;
 use \Swift_Message;
@@ -275,23 +270,61 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/detail-de-la-bd/{titleBook}/", requirements={"name"="[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,1200}"}, name="displayOneBD")
+     * @Route("/detail-de-la-bd/{titleBook}/", name="displayOneBD")
      * Page détail d'une seule BD
      */
-    public function displayOneBD($titleBook)
+    public function displayOneBD(Request $request, $titleBook)
     {
+        // Récupération de la session
+        $session = $this->get('session');
         //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
         $book = $bookRepo->findOneByTitle($titleBook);
+        $user = $this->getUser();
+        //si formulaire cliqué
+        if ($request->isMethod('POST')){
+            //TODO remettre le STR_REPLACE
+            //$content = str_replace(array("\n", "\r"), ' ', nl2br($request->request->get('content')));
+            $content= $request->request->get('inputComment');
+            // Bloc des vérifs
+            if(!preg_match('#^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,120}$#', $content)){
+                $errors['invalidContent'] = true;  
+                dump('contenu invalide'); 
+            }  
+            // Si pas d'erreurs
+            if(!isset($errors)){
+                $entityManager = $this->getDoctrine()->getManager();
+                $sessionUser= $session->get('account');
+                $user = $userRepo->find($sessionUser->getId());
+                //$book = $bookRepo->find($bookUser->getId());
 
-        $comments = $book->getComments();
-
-
-        return $this->render('displayOneBD.html.twig', array(
-            'book' => $book,
-            'comments' => $comments
-        ));
+                // On crée le nouveau commentaire, puis on l'hydrate avec les données adéquates
+                $comment = new Comment();
+                $comment ->setContent($content); // On donne le contenu venant du formulaire
+                $comment->setDate(new DateTime);
+                $comment->setUser($user);
+                $comment->setBook($book);   
+                $entityManager->persist($comment);   
+                $entityManager->flush();
+            }
+        }
+        if(isset($errors)){
+            $comments = $book->getComments();
+            return $this->render('displayOneBD.html.twig', array(
+                'book' => $book,
+                'comments' => $comments,
+                'errors' => $errors
+            ));
+        }else{
+            //AFFICHER LES COMMs
+            $comments = $book->getComments();
+            return $this->render('displayOneBD.html.twig', array(
+                'book' => $book,
+                'comments' => $comments,
+            ));
+        }
     }
 
     /**
