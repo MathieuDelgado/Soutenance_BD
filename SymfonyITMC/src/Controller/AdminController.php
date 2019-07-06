@@ -17,6 +17,7 @@ use App\Service\Recaptcha;
 
 /**
  * @Route("/admin")
+ * Page uniquement dédiée à l'administration du site
  */
 class AdminController extends AbstractController
 {
@@ -30,6 +31,7 @@ class AdminController extends AbstractController
         // on utilise la session 
         $session = $this->get('session');
 
+        // on vérifie que l'utilsateur a un compte et s'il a les droits
         if(!$session->has('account') || !$session->get('account')->getAdmin()){
             throw new AccessDeniedHttpException();
         }

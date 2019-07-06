@@ -34,12 +34,14 @@ class MainController extends AbstractController
      */
     public function home()
     {
-        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
-        $book = $bookRepo->findOneById(1);
+        // utilisation du repository pour afficher les infos des BD en page d'accueil
+        $booksRepo = $this->getDoctrine()->getRepository(Book::class);
+        $books = $booksRepo->findAll();
 
         return $this->render('home.html.twig', array(
-            'book' => $book
+            'books' => $books
         ));
+
     }
 
     /**
