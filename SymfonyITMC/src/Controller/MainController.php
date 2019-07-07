@@ -20,6 +20,7 @@ use Doctrine\ORM\EntityManager;
 
 
 
+
 use \Datetime;
 use \Swift_Mailer;
 use \Swift_Message;
@@ -277,18 +278,22 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/detail-de-la-bd/{titleBook}/", requirements={"name"="[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,1200}"}, name="displayOneBD")
+     * @Route("/detail-de-la-bd/{titleBook}/", requirements={"name"="[0-9a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,1200}"}, name="displayOneBD")
      * Page détail d'une seule BD
      */
     public function displayOneBD($titleBook)
     {
-        //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
+        $session = $this->get('session');
+
+        //via le repository des Books, on récupère la BD qui correspond à book_id dans l'url
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
+
+        // DEBUT CODE A PAS TOUCHER
         $book = $bookRepo->findOneByTitle($titleBook);
-
         $comments = $book->getComments();
-
+        // FIN CODE A PAS TOUCHER
+        
 
         return $this->render('displayOneBD.html.twig', array(
             'book' => $book,
@@ -472,7 +477,7 @@ class MainController extends AbstractController
 
             //recuperation des données
             $googleId = $request->request->get('book');
-            dump($googleId);
+            
             //bloc des verifs
             if (!preg_match('#^.{12}$#', $googleId)) {
                 $errors['googleIdInvalid'] = true;

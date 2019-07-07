@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="comic_case comic_text">ajouter une bd</h1>
+<h1 class="comic_case comic_text">Ajouter une bd</h1>
     {#formulaire factice pour demarrer la requete AJAX#}
 <form>
     <input placeholder="Livre..." type="text" id="bookSearchValue"><button id="bookSearch">Chercher</button>
@@ -52,15 +52,14 @@
 
                 $.ajax({
                     url: 'https://www.googleapis.com/books/v1/volumes?q=+intitle:' + bookSearchValue,
-                    method: 'GET',
+                    method: 'GET', // modification de la requete en POST
                     dataType: 'json',
                     success: function(data){
 
                         $('.googleId').remove();
 
-                        console.log(data);
                         var items=data.items
-                        //console.log(items)
+                        
                         items.forEach((item) => {
                             $('#optionResult').after(
                                 `<option name="googleId" class="googleId" value="`+ item.id + `">`+ item.volumeInfo.title +`</option>`
