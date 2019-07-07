@@ -288,10 +288,10 @@ class MainController extends AbstractController
         //si formulaire cliqué
         if ($request->isMethod('POST')){
             //TODO remettre le STR_REPLACE
-            //$content = str_replace(array("\n", "\r"), ' ', nl2br($request->request->get('content')));
+            //$content = str_replace(array("\n", "\r"), ' ', nl2br($request->request->get('inputComment')));
             $content= $request->request->get('inputComment');
             // Bloc des vérifs
-            if(!preg_match('#^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,120}$#', $content)){
+            if(!preg_match('#^[a-zÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿA-Z0-9\.\,\'\:\"\(\)\?\!;\-\r\n ]{1,2000}$#', $content)){
                 $errors['invalidContent'] = true;  
                 dump('contenu invalide'); 
             }  
