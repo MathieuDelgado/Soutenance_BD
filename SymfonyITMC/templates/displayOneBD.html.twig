@@ -7,7 +7,7 @@
 
 {# <p class="alert alert-danger col-12">BD inexistante !</p> #}
 
-<main class="container my-4">
+<main class="container my-4 comic_text">
     <div class="row bg-white comic_case my-2 p-4">
         <h1 class="col-12 text-center style_title"> {{ book.getTitle() }} </h1>
         <h2 class="col-12 text-center"> {{ book.getAuthor() }} - {{ book.getIllustrator() }} - {{ book.getEditor() }}
@@ -19,10 +19,12 @@
             {# PB l'image ne se colle pas dans l'espace à droite quand on est en talle sm, malgré mon mx-auto... #}
             <div class="row">
                 <img src="{{book.getImgUrl()}}" class="col-12 pt-3" alt="couverture" title="nom_de_la_BD" />
-                <form method="GET" action="path {{ 'displayOneBD' }}" class="col-7 mx-auto my-4" >
-                    <button type="button" class="btn btn-secondary btn-lg ">Ajouter à ma
-                        bibliothèque</button>
+                <form method="POST" action="{{ path('displayOneBD',{ 'titleBook' : book.title }) }}" class="col-7 ml-4 my-2" >
+                    <p><input name="addComicToUserLibrary" type="submit" class="btn btn-secondary " value="Ajouter à ma bibliothèque"></p>
                 </form>
+                {% if errors.alreadyExist is defined %}
+                <p class="text-danger ml-4">Vous avez déjà cette BD</p>
+            {% endif %}
             </div>
         
             
@@ -52,5 +54,16 @@
         </div>
     </div>
     {% endfor %}
+
+    <div>
+            {% if errors.invalidContent is defined %}
+                <p class="text-danger">Contenu invalide</p>
+            {% endif %}
+        <form action="{{ path('displayOneBD',{ 'titleBook' : book.title }) }}" method="POST">
+
+            <textarea name="inputComment" rows="5" cols="100"></textarea>           
+            <p><input type="submit" value="commenter"></p>
+        </form>
+    </div>
 </main>
 {% endblock %}

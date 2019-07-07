@@ -15,12 +15,6 @@ use App\Entity\Comment;
 use App\Entity\Kind;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
-
-
-
-
-
-
 use \Datetime;
 use \Swift_Mailer;
 use \Swift_Message;
@@ -278,27 +272,92 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/detail-de-la-bd/{titleBook}/", requirements={"name"="[0-9a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,1200}"}, name="displayOneBD")
+     * @Route("/detail-de-la-bd/{titleBook}/", name="displayOneBD")
      * Page détail d'une seule BD
      */
-    public function displayOneBD($titleBook)
+    public function displayOneBD(Request $request, $titleBook)
     {
+        // Récupération de la session
         $session = $this->get('session');
-
-        //via le repository des Books, on récupère la BD qui correspond à book_id dans l'url
+        //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
-        $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
-
-        // DEBUT CODE A PAS TOUCHER
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $bookIsbn = $bookRepo->findOneByTitle($titleBook)->getIsbn();
         $book = $bookRepo->findOneByTitle($titleBook);
-        $comments = $book->getComments();
-        // FIN CODE A PAS TOUCHER
-        
+        $comments= '';
 
-        return $this->render('displayOneBD.html.twig', array(
-            'book' => $book,
-            'comments' => $comments
-        ));
+        // si bouton ajouter à ma biblio cliqué
+        if ($request->isMethod('POST')){
+            
+            //on vérifie si la bd n'est pas déja présente en bdd
+            $bookIfExist = $bookRepo->findOneByIsbn($bookIsbn);
+
+            if(empty($bookIfExist)){
+                $errors['alreadyExist'] = true;
+
+            }else{
+                //On recupère le manager des entités pour enregistrer en bdd
+                $em = $this->getDoctrine()->getManager();
+
+                $updateUser = $session->get('account');
+                $updateUser = $em->merge($updateUser);
+
+                $updateUser
+                    ->addBook($book);
+                
+                $em -> flush();
+                return $this->render('displayOneBd.html.twig', array(
+                    'book' => $book,
+                    'comments' => $comments
+                ));
+            }
+
+        }
+        
+        //si formulaire d'ajout de commentaires cliqué
+        if ($request->isMethod('POST')){
+            //TODO remettre le STR_REPLACE
+            //$content = str_replace(array("\n", "\r"), ' ', nl2br($request->request->get('content')));
+            $content= $request->request->get('inputComment');
+            // Bloc des vérifs
+            if(!preg_match('#^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*){1,120}$#', $content)){
+                $errors['invalidContent'] = true;  
+                 
+            }  
+            // Si pas d'erreurs
+            if(!isset($errors)){
+                $entityManager = $this->getDoctrine()->getManager();
+                $sessionUser= $session->get('account');
+                $user = $userRepo->find($sessionUser->getId());
+                //$book = $bookRepo->find($bookUser->getId());
+
+                // On crée le nouveau commentaire, puis on l'hydrate avec les données adéquates
+                $comment = new Comment();
+                $comment ->setContent($content); // On donne le contenu venant du formulaire
+                $comment->setDate(new DateTime);
+                $comment->setUser($user);
+                $comment->setBook($book);   
+                $entityManager->persist($comment);   
+                $entityManager->flush();
+            }
+        }
+        if(isset($errors)){
+            $comments = $book->getComments();
+            return $this->render('displayOneBD.html.twig', array(
+                'book' => $book,
+                'comments' => $comments,
+                'errors' => $errors
+            ));
+        }else{
+            //AFFICHER LES COMMs
+            $comments = $book->getComments();
+            return $this->render('displayOneBD.html.twig', array(
+                'book' => $book,
+                'comments' => $comments,
+            ));
+        }
+        
+        
     }
 
     /**
@@ -533,18 +592,30 @@ class MainController extends AbstractController
      * @Route("/ma-page-de-profil/", name="profil")
      * Page d'affichage du profil utilisateur
      */
-    public function userProfil()
+    public function userProfil(Request $request)
     {
         //recuperation de la session
         $session = $this->get('session');
 
         //si account n'existe pas en session, alors l'utilisateur est redirigé vers la page d'accueil
 
-        // if (!$session->has('account')) {
-        //     return $this->redirectToRoute('home');
-        // }
+        if (!$session->has('account')) {
+            return $this->redirectToRoute('home');
+        }
 
+        // On recupère tout les livres de l'utilisateur
+        $currentUser = $session->get('account');
 
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        $userInfos = $userRepo->findOneById($currentUser->getId());
+
+        $books = $currentUser->getBooks();
+
+        return $this->render('userProfil.html.twig', array(
+            'user' => $currentUser,
+            'books' => $books
+        ));
 
         return $this->render('userProfil.html.twig');
     }
@@ -620,7 +691,6 @@ class MainController extends AbstractController
                 $updateUser = $session->get('account');
 
                 $updateUser = $em->merge($updateUser);
-                dump($updateUser);
 
                 $updateUser
                     ->setPseudo($updatePseudo)

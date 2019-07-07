@@ -3,24 +3,23 @@
 {% block title %} Plan du site {% endblock title %}
 
 {% block body %}
-<div class="container">
+<div class="container my-4 comic_text">
     <div class="row">
         <div class="col-6 offset-3 pt-5">
-            <h2 class="text-center">Plan du site</h2>
+            <h1 class="col-12 col-lg-8 offset-lg-2 mb-4 style_title bg-white text-center p-4 comic_case">Plan du site</h1>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-6 offset-3">
+
+        <div class="col-6 offset-3 comic_case bg-white">
             <ul>
-                <li class="" id="index" name="index" ><a href="index.html"> Accueil </a></li>
-                <li class="" id="bdbdd" name="bdbdd" ><a href="bdbdd.html"> Bibliothèque des BDs </a></li>
-                <li class="" id="affichage_bd" name="affichage_bd" ><a href="affichage_bd.html"> Affichage BD </a></li>
-                <li class="" id="profil" name="profil" ><a href="profil.html"> Profil </a></li>
-                <li class="" id="edition_profil" name="edition_profil" ><a href="edition_profil.html"> Edition du profil </a></li>
-                <li class="" id="contact" name="contact" ><a href="contact.html"> Contact </a></li>
-                <li class="" id="mentions_legales" name="mentions_legales" ><a href="mentions_legales.html"> Mentions légales </a></li>
-                <li class="" id="error" name="error" ><a href="error.html"> Page d'erreur </a></li>
-                <li class="" id="sitemap" name="sitemap" ><a href="sitemap.html"> Sitemap </a></li>
+                <li><a href="{{ path('home') }}"> Accueil </a></li>
+                <li><a href="{{ path('bdbddByTitle') }}"> Bibliothèque des BDs </a></li>
+                <li><a href="{{ path('register') }}"> Inscription </a></li>
+                <li><a href="{{ path('login') }}"> Connexion </a></li>
+                <li><a href="{{ path('profil') }}"> Profil </a></li>
+                <li><a href="{{ path('editProfil') }}"> Edition du profil </a></li>
+                <li><a href="{{ path('contact') }}"> Contact </a></li>
+                <li><a href="{{ path('mentions_legales') }}"> Mentions légales </a></li>
+                <li><a href="{{ path('sitemap') }}"> Sitemap </a></li>
             </ul>
         </div>
     </div>
