@@ -592,7 +592,7 @@ class MainController extends AbstractController
      * @Route("/ma-page-de-profil/", name="profil")
      * Page d'affichage du profil utilisateur
      */
-    public function userProfil(Request $request)
+    public function userProfil()
     {
         //recuperation de la session
         $session = $this->get('session');
@@ -608,7 +608,6 @@ class MainController extends AbstractController
 
         $userRepo = $this->getDoctrine()->getRepository(User::class);
 
-        $userInfos = $userRepo->findOneById($currentUser->getId());
 
         $books = $currentUser->getBooks();
 
