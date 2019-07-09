@@ -7,65 +7,80 @@
 
 <main class="container my-4 comic_text">
     <!-- affichage du titre, de l'auteur, l'illustrateur et l'éditeur de la BD -->
-    <div class="row bg-white comic_case my-2 p-4">
-        <h1 class="col-12 text-center style_title"> {{ book.getTitle() }} </h1>
-        <h2 class="col-12 text-center"> {{ book.getAuthor() }} - {{ book.getIllustrator() }} - {{ book.getEditor() }}
-        </h2>
-    </div>
+    <div class="row">
 
-    <!-- affichage de la couverture et du résumé de la bd -->
-    <article class="row">
-        <div class="col-lg-4 comic_case bg-white mb-2 m-lg-2">
-            <div class="row">
-                <img src="{{book.getImgUrl()}}" class="col-12 pt-3" alt="couverture" title="nom_de_la_BD" />
-                <!-- Bouton d'ajout de la bd a la bibliothèque utilisateur -->
-                <form method="POST" action="{{ path('displayOneBD',{ 'titleBook' : book.title }) }}" class="col-7 ml-4 my-2" >
-                    <p><input name="addComicToUserLibrary" type="submit" class="btn btn-secondary " value="Ajouter à ma bibliothèque"></p>
-                </form>
-                <!-- traitement des erreur si l'utilisateur possède déjà cette bd -->
-                {% if errors.alreadyExist is defined %}
-                <p class="text-danger ml-4">Vous avez déjà cette BD</p>
-            {% endif %}
+        <div class="col-12 bg-white comic_case my-2 p-4 text-center">
+            <h1 class="style_title"> {{ book.getTitle() }} </h1>
+            <h2> {{ book.getAuthor() }} - {{ book.getIllustrator() }} - {{ book.getEditor() }}</h2>
+        </div>
+
+        <!-- affichage de la couverture et du résumé de la bd -->
+        <div class="col-lg-4 pb-2 pr-md-2 py-md-2 pl-0">
+            <div class="comic_case bg-white p-3">
+                <div class="row">
+                    <img src="{{book.getImgUrl()}}" class="col-12" alt="couverture" title="nom_de_la_BD" />
+                    <!-- Bouton d'ajout de la bd a la bibliothèque utilisateur -->
+                    <form method="POST" action="{{ path('displayOneBD',{ 'titleBook' : book.title }) }}"
+                    class="col-12 ml-5 my-2">
+                    <input name="addComicToUserLibrary" type="submit" class="btn btn-success"
+                        value="Ajouter à ma bibliothèque">
+                    </form>
+                    <!-- traitement des erreur si l'utilisateur possède déjà cette bd -->
+                    {% if errors.alreadyExist is defined %}
+                    <p class="text-danger ml-4">Vous avez déjà cette BD</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
-        <div class="col-lg-7 comic_case bg-white mb-2 m-lg-2">
-            <div class="row p-2 p-lg-4">
-                <h3 class="col-12">Résumé</h3>
-                <p class="my-3"> {{ book.getSynopsis() }} </p>
+        <div class="col-lg-8 pb-2 pl-2 py-md-2 pr-0">
+            <div class="comic_case bg-white h-100 d-inline-block">
+                <div class="row p-2 p-lg-4">
+                    <h3 class="col-12">Résumé</h3>
+                    <p class="my-3"> {{ book.getSynopsis() }} </p>
+                </div>
             </div>
         </div>
         <hr>
-    </article>
+    </div>
     {# fin de l'article #}
 
     {# partie commentaire a repeter avec un forIn #}
     {% for comment in comments %}
-    <div class="row comic_case bg-white my-2">
-        <div class="col-lg-2">
-            <!-- TODO ajouter ici le pseudo de l'utilisateur ayant poster le commentaire -->
-            <i class="fas fa-user fa-5x col-12 pt-4 ml-3"></i>
+        <div class="row comic_case bg-white py-2 pt-md-4">
+            <div class="comic_case bg-white">
+                <div class="col-lg-2">
+                    <!-- TODO ajouter ici le pseudo de l'utilisateur ayant poster le commentaire -->
+                    <i class="fas fa-user fa-5x col-12 pt-4 ml-3"></i>
+                </div>
+                <div class="col-lg-9 my-3">
+                    <p>
+                        {{comment.content}}
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-9 my-3">
-            <p>
-                {{comment.content}}
-            </p>
-        </div>
-    </div>
     {% endfor %}
 
-    <div class="row comic_case bg-light justify-content-center pt-3">
-            {% if errors.invalidContent is defined %}
+    <div class="row pt-3">
+        {% if errors.invalidContent is defined %}
             <div class="col-12 pt-1">
-                    <p class="alert alert-danger col-12 text-center">Email invalide</p>
+                <div class="comic_case bg-light">
+                    <p class="alert alert-danger text-center">Email invalide</p>
                 </div>
-            {% endif %}
-        <form action="{{ path('displayOneBD',{ 'titleBook' : book.title }) }}" method="POST">
-            <div class="form-group">
-                <textarea class="form-control" name="inputComment" rows="5" cols="100" placeholder="Donner votre avis !"></textarea>
-                <input class="btn btn-secondary mt-2" type="submit" value="Commenter">
             </div>
-        </form>
+        {% endif %}
+        <div class="col-12 px-0">
+            <div class="comic_case bg-light p-2">
+                <form action="{{ path('displayOneBD',{ 'titleBook' : book.title }) }}" method="POST">
+                    <div class="form-group">
+                        <textarea class="form-control" name="inputComment" rows="5" cols="100"
+                        placeholder="Donner votre avis !"></textarea>
+                        <input class="btn btn-success mt-2" type="submit" value="Commenter">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 {% endblock %}
