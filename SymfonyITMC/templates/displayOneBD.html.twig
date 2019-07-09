@@ -64,10 +64,8 @@
     {% if app.session.has('account') %}
     <div class="row pt-3">
         {% if errors.invalidContent is defined %}
-            <div class="col-12 pt-1">
-                <div class="comic_case bg-light">
-                    <p class="alert alert-danger text-center">Email invalide</p>
-                </div>
+            <div class="col-12">
+                <p class="alert alert-danger text-center">Commentaire invalide</p>
             </div>
         {% endif %}
         <div class="col-12 px-0">

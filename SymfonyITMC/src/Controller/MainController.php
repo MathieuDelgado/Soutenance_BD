@@ -277,9 +277,12 @@ class MainController extends AbstractController
      */
     public function displayOneBD(Request $request, $titleBook)
     {
+
         // Récupération de la session
         $session = $this->get('session');
-
+        if (!$session->has('account')) {
+            $errors['unconnected'] = true; 
+        }
         //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
