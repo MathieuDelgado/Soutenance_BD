@@ -277,8 +277,12 @@ class MainController extends AbstractController
      */
     public function displayOneBD(Request $request, $titleBook)
     {
+
         // Récupération de la session
         $session = $this->get('session');
+        if (!$session->has('account')) {
+            $errors['unconnected'] = true; 
+        }
         //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
@@ -539,7 +543,7 @@ class MainController extends AbstractController
 
             //recuperation des données
             $googleId = $request->request->get('book');
-            dump($googleId);
+            
             //bloc des verifs
             if (!preg_match('#^.{12}$#', $googleId)) {
                 $errors['googleIdInvalid'] = true;
@@ -551,7 +555,7 @@ class MainController extends AbstractController
                 $parsedResult = json_decode($result);
                 $items = $parsedResult->items;
 
-
+                
                 $title = isset($items[0]->volumeInfo->title) ? $items[0]->volumeInfo->title : 'inconnu';
                 $author = isset($items[0]->volumeInfo->authors[0]) ? $items[0]->volumeInfo->authors[0] : 'inconnu';
                 $illustrator = isset($items[0]->volumeInfo->authors[1]) ? $items[0]->volumeInfo->authors[1] : 'Inconnu';
@@ -564,34 +568,34 @@ class MainController extends AbstractController
                 $bookRepo = $this->getDoctrine()->getRepository(Book::class);
 
                 $bookIfExist = $bookRepo->findOneByIsbn($isbn);
-
+                
                 if (empty($bookIfExist)) {
 
                     $newBook = new Book();
                     $newBook
-                        ->setTitle($title)
-                        ->setAuthor($author)
-                        ->setIllustrator($illustrator)
-                        ->setEditor($publisher)
-                        ->setIsbn($isbn)
-                        ->setSynopsis($synopsis)
-                        ->setImgUrl($imgUrl)
+                    ->setTitle($title)
+                    ->setAuthor($author)
+                    ->setIllustrator($illustrator)
+                    ->setEditor($publisher)
+                    ->setIsbn($isbn)
+                    ->setSynopsis($synopsis)
+                    ->setImgUrl($imgUrl)
                         ->setGoogleIdent($googleId);
                     dump($newBook);
                     //On recupère le manager des entités
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($newBook);
                     $em->flush();
-
+                    
                     //On affichera la pochette du résultat de la recherche 
                     $books = $bookRepo->findAll();
                     // on vise le dernier ajout
                     $lastBookCover = $books[count($books)-1];
 
-                    return $this->render('addComic.html.twig', ['
-                    addComicSuccess' => true,
-                    'lastBookCover' => $lastBookCover
-                    ]);
+                    return $this->render('addComic.html.twig', [
+                        'addComicSuccess' => true,
+                        'lastBookCover' => $lastBookCover
+                        ]);
                 } else {
                     $errors['comicAlreadyIn'] = true;
                     return $this->render('addComic.html.twig', ['errors' => $errors]);
@@ -605,7 +609,7 @@ class MainController extends AbstractController
      * @Route("/ma-page-de-profil/", name="profil")
      * Page d'affichage du profil utilisateur
      */
-    public function userProfil(Request $request)
+    public function userProfil()
     {
         //recuperation de la session
         $session = $this->get('session');
@@ -621,10 +625,9 @@ class MainController extends AbstractController
 
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $userRepo = $this->getDoctrine()->getRepository(User::class);
-        
+
+
         $books = $currentUser->getBooks();
-        dump($session);
-        dump($books);
 
         return $this->render('userProfil.html.twig', array(
             'user' => $currentUser,
@@ -705,7 +708,6 @@ class MainController extends AbstractController
                 $updateUser = $session->get('account');
 
                 $updateUser = $em->merge($updateUser);
-                dump($updateUser);
 
                 $updateUser
                     ->setPseudo($updatePseudo)
