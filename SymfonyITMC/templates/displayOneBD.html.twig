@@ -34,11 +34,9 @@
         </div>
 
         <div class="col-lg-8 pb-2 pl-2 py-md-2 pr-0">
-            <div class="comic_case bg-white h-100 d-inline-block">
-                <div class="row p-2 p-lg-4">
-                    <h3 class="col-12">Résumé</h3>
-                    <p class="my-3"> {{ book.getSynopsis() }} </p>
-                </div>
+            <div class="comic_case bg-white h-100 d-inline-block p-2">
+                <h3 class="col-12">Résumé</h3>
+                <p class="my-3"> {{ book.getSynopsis() }} </p>
             </div>
         </div>
         <hr>
@@ -47,16 +45,18 @@
 
     {# partie commentaire a repeter avec un forIn #}
     {% for comment in comments %}
-        <div class="row comic_case bg-white py-2 pt-md-4">
-            <div class="comic_case bg-white">
-                <div class="col-lg-2">
-                    <!-- TODO ajouter ici le pseudo de l'utilisateur ayant poster le commentaire -->
-                    <i class="fas fa-user fa-5x col-12 pt-4 ml-3"></i>
-                </div>
-                <div class="col-lg-9 my-3">
-                    <p>
-                        {{comment.content}}
-                    </p>
+        <div class="row py-1 pt-md-2">
+            <div class="col-12 comic_case bg-white">
+                <div class="row">
+                    <div class="col-lg-2 py-2">
+                        <!-- TODO ajouter ici le pseudo de l'utilisateur ayant poster le commentaire -->
+                        <i class="fas fa-user fa-5x"></i>
+                    </div>
+                    <div class="col-lg-9 my-3">
+                        <p>
+                            {{comment.content}}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
