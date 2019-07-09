@@ -5,74 +5,92 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="comic_case comic_text">Ajouter une bd</h1>
+<main class="container-fluid my-4">
+    <div class="row">
+        <h1 class="col-12 col-lg-8 offset-lg-2 mb-4 style_title bg-white text-center p-4 comic_case">Ajouter une bd </h1>
+    </div>
+
+
     {#formulaire factice pour demarrer la requete AJAX#}
-<form>
-    <input placeholder="Livre..." type="text" id="bookSearchValue"><button id="bookSearch">Chercher</button>
-</form>
+    
+        <form class="row">
+            <input class="col-12 col-xs-12 col-lg-6 offset-lg-3  mt-5 text-center" placeholder="Bande dessinée..." type="text" id="bookSearchValue"><button id="bookSearch" class="btn btn-secondary my-1 mx-auto Profil_button col-12 col-xs-12 col-lg-6 offset-lg-3 mt-2">Chercher</button>
+        </form>
+    
 
-<form action="{{ path('addComic') }}" method="POST">
-    <select name="book" >
-            <option id="optionResult" disabled selected>Aucun livre recherché</option>
+    <form class="row" action="{{ path('addComic') }}" method="POST">
+        <select name="book" class="col-12 col-xs-12 col-lg-6 offset-lg-3 mt-5 text-center text-dark" >
+            <option id="optionResult" class="text-center" disabled selected>Aucune BD recherchée</option>
         </select>
-        <input type="submit">
+        
+            <input type="submit" class="btn btn-secondary my-1 mx-auto Profil_button col-12 col-xs-12 col-lg-6 offset-lg-3 mt-2"  value="Ajouter ma BD">
+        
     </form>
-    <div id="status"></div>
-        {% if addComicSuccess is defined %}
-            <p class="alert alert-success col-12 text-center">BD ajoutée avec succès !</p>
-        {% endif %}
+        <div id="status" ></div>
+            {% if addComicSuccess is defined %}
+                <p class="alert alert-success col-12 col-md-6 offset-md-3 text-center mt-4" id="comicResult" >BD ajoutée avec succès !</p>
+                <img class="col-lg-2 offset-lg-5 col-10 offset-1 " src="{{lastBookCover.getImgUrl()}}" />
+            {% endif %}
 
-        {% if errors is defined %}
-            <div class="col-12 alert alert-warning text-center">Erreur lors de l'ajout <a
-            href="{{ path('contact') }}">Contacter un administrateur</a></div>
-        {% endif %}
-
-
-    {% block javascripts %}
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-
-        var bookSearch = $('#bookSearch');
+            {% if errors.googleIdInvalid is defined %}
+                <div class="col-12 alert alert-warning text-center">Erreur lors de l'ajout <a
+                href="{{ path('contact') }}">Contacter un administrateur</a></div>
+            {% endif %}
 
 
-        bookSearch.click(function(e){
-            e.preventDefault();
+        {% block javascripts %}
 
-            var bookSearchValue = $('#bookSearchValue').val();
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
 
-            var $query = $('#bookSearchValue').val();
+            var bookSearch = $('#bookSearch');
 
-            // Si le nom de la BD recherchée est plus petit que 3 caractères, message d'erreur
-            if($query.length < 3){
-                $('#status').html('<p style="color:red">Veuillez mettre au moins 3 caractères</p>');
-            } else {
 
-                $('.book').html('');
+            bookSearch.click(function(e){
+                e.preventDefault();
 
-                $.ajax({
-                    url: 'https://www.googleapis.com/books/v1/volumes?q=+intitle:' + bookSearchValue,
-                    method: 'GET', // modification de la requete en POST
-                    dataType: 'json',
-                    success: function(data){
+                var bookSearchValue = $('#bookSearchValue').val();
 
-                        $('.googleId').remove();
+                var $query = $('#bookSearchValue').val();
 
-                        var items=data.items
-                        
-                        items.forEach((item) => {
-                            $('#optionResult').after(
-                                `<option name="googleId" class="googleId" value="`+ item.id + `">`+ item.volumeInfo.title +`</option>`
-                                )
-                        });
+                // Si le nom de la BD recherchée est plus petit que 3 caractères, message d'erreur
+                if($query.length < 3){
+                    $('#status').html('<p style="color:red">Veuillez mettre au moins 3 caractères</p>');
+                } else {
 
-                    }
-                });
+                    $('.book').html('');
 
-            }
-        });
+                    $.ajax({
+                        url: 'https://www.googleapis.com/books/v1/volumes?q=+intitle:' + bookSearchValue,
+                        method: 'GET', // modification de la requete en POST
+                        dataType: 'json',
+                        success: function(data){
 
-    </script>
-    {% endblock %}
+                            $('.googleId').remove();
+
+                            var items=data.items
+                            
+                            items.forEach((item) => {
+                                $('#optionResult').after(
+                                    `<option name="googleId" class="googleId" value="`+ item.id + `">`+ item.volumeInfo.title +`</option>`
+                                    );
+                                /* $('#comicResult').before(
+                                    `<img class="mx-auto" style="width:80px;height:150px"
+                                    src=" {{ asset('`+ item.volumeInfo.imageLinks.thumbnail + `') }}"
+                                    alt="pochette de ` + item.volumeInfo.title + ` " />`
+                                     
+                                );*/
+                            });
+                            
+                        }
+                    });
+
+                }
+            });
+
+        </script>
+    </main>
+{% endblock %}
+
 
 {% endblock %}
