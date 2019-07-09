@@ -279,42 +279,14 @@ class MainController extends AbstractController
     {
         // Récupération de la session
         $session = $this->get('session');
+
         //via le repository des Book, on récupère la BD qui correspond à book_id dans l'url
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
+        $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
         $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $bookIsbn = $bookRepo->findOneByTitle($titleBook)->getIsbn();
         $book = $bookRepo->findOneByTitle($titleBook);
-        $comments= '';
-
-        // si bouton ajouter à ma biblio cliqué
-        if ($request->isMethod('POST')){
-            
-            //on vérifie si la bd n'est pas déja présente en bdd
-            $bookIfExist = $bookRepo->findOneByIsbn($bookIsbn);
-
-            if(empty($bookIfExist)){
-                $errors['alreadyExist'] = true;
-
-            }else{
-                //On recupère le manager des entités pour enregistrer en bdd
-                $em = $this->getDoctrine()->getManager();
-
-                $updateUser = $session->get('account');
-                $updateUser = $em->merge($updateUser);
-
-                $updateUser
-                    ->addBook($book);
-                
-                $em -> flush();
-                return $this->render('displayOneBd.html.twig', array(
-                    'book' => $book,
-                    'comments' => $comments
-                ));
-            }
-
-        }
-        
-        //si formulaire d'ajout de commentaires cliqué
+        $user = $this->getUser();
+        //si formulaire cliqué
         if ($request->isMethod('POST')){
             //TODO remettre le STR_REPLACE
             //$content = str_replace(array("\n", "\r"), ' ', nl2br($request->request->get('inputComment')));
@@ -322,7 +294,7 @@ class MainController extends AbstractController
             // Bloc des vérifs
             if(!preg_match('#^[a-zÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿA-Z0-9\.\,\'\:\"\(\)\?\!;\-\r\n ]{1,2000}$#', $content)){
                 $errors['invalidContent'] = true;  
-                 
+                dump('contenu invalide'); 
             }  
             // Si pas d'erreurs
             if(!isset($errors)){
@@ -356,8 +328,6 @@ class MainController extends AbstractController
                 'comments' => $comments,
             ));
         }
-        
-        
     }
 
     /**
