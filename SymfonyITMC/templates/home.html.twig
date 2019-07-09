@@ -19,12 +19,14 @@
                     <i class="fas fa-star fa-2x text-warning"></i>
                 </div>
             </div>
-            <figure class="figure rounded ">
-                <img src="{{books[0].getImgUrl()}}" class="figure-img img-fluid" alt="{{books[0].getTitle()}}"
-                    title="{{books[0].getTitle()}}">
-                <!-- les etoiles récupéré grace a fontowsome-->
-                <figcaption class="figure-caption text-center comic_text">{{ books[0].getSynopsis() }}</figcaption>
-            </figure>
+            {% if books|length %}
+                <figure class="figure rounded ">
+                    <img src="{{books[0].getImgUrl()}}" class="figure-img img-fluid" alt="{{books[0].getTitle()}}"
+                        title="{{books[0].getTitle()}}">
+                    <!-- les etoiles récupéré grace a fontowsome-->
+                    <figcaption class="figure-caption text-center comic_text">{{ books[0].getSynopsis() }}</figcaption>
+                </figure>
+            {% endif %}
         </div>
         <!-- le cadre pour décrire le fonctionnement de la page-->
         <div class="col-lg-5 col-12 order-1 order-lg-2 bg-white p-4 mb-2 ml-lg-2 comic_case">
@@ -63,6 +65,7 @@
                         <p>  {{ book.getSynopsis() }} </p>
                     </div>
                 </li>
+                <hr>
                 {% endfor %}
             {% endif %}
             </ul>

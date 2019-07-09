@@ -5,75 +5,112 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="comic_case comic_text">ajouter une bd</h1>
+<main class="container-fluid my-4 comic_text">
+    <div class="row">
+        <h1 class="col-12 col-lg-8 offset-lg-2 mb-4 style_title bg-white text-center p-4 comic_case">Ajouter une bd </h1>
+    </div>
+
+
     {#formulaire factice pour demarrer la requete AJAX#}
-<form>
-    <input placeholder="Livre..." type="text" id="bookSearchValue"><button id="bookSearch">Chercher</button>
-</form>
+    <div class="row text-center">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="comic_case bg-light">
+                <form>
+                    <div class="form-group p-2">
+                        <input class="form-control" placeholder="Bande dessinée..." type="text" id="bookSearchValue">
+                        <button id="bookSearch" class="btn btn-info my-1 mx-auto Profil_button col-12 col-xs-12 col-lg-6 offset-lg-3 mt-2">Chercher</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-12 col-md-6 offset-md-3 pt-4">
+            <div class="comic_case bg-light">
+                <form action="{{ path('addComic') }}" method="POST">
+                    <div class="form-group p-2">
+                        <select name="book" class="form-control" >
+                            <option id="optionResult"disabled selected>Résultat de la recherche</option>
+                        </select>        
+                        <input type="submit" class="btn btn-success my-1 mx-auto Profil_button col-12 col-xs-12 col-lg-6 offset-lg-3 mt-2"  value="Ajouter ma BD">
+                    </div>   
+                </form>
+            </div>
+        </div>
+    </div>
+        <div id="status" ></div>
+            {% if addComicSuccess is defined %}
+                <p class="alert alert-success col-12 col-md-6 offset-md-3 text-center mt-4" id="comicResult" >BD ajoutée avec succès !</p>
+                <img class="col-lg-2 offset-lg-5 col-10 offset-1 " src="{{lastBookCover.getImgUrl()}}" />
+            {% endif %}
 
-<form action="{{ path('addComic') }}" method="POST">
-    <select name="book" >
-            <option id="optionResult" disabled selected>Aucun livre recherché</option>
-        </select>
-        <input type="submit">
-    </form>
-    <div id="status"></div>
-        {% if addComicSuccess is defined %}
-            <p class="alert alert-success col-12 text-center">BD ajoutée avec succès !</p>
-        {% endif %}
-
-        {% if errors is defined %}
-            <div class="col-12 alert alert-warning text-center">Erreur lors de l'ajout <a
-            href="{{ path('contact') }}">Contacter un administrateur</a></div>
-        {% endif %}
+            {% if errors.googleIdInvalid is defined %}
+                <div class="col-12 text-center">
+                    <p class="alert alert-warning">Erreur lors de l'ajout</p>
+                    <a href="{{ path('contact') }}">Contacter un administrateur</a>
+                </div>
+            {% endif %}
+            {# si la bd existe deja en BDD declanchement d'une erreur #}
+            {% if errors.comicAlreadyIn is defined %}
+                <div class="col-12 text-center">
+                    <p class="alert alert-warning">Erreur cette BD est déjà présente dans la bibliothèque</p>
+                </div>
+            {% endif %}
 
 
-    {% block javascripts %}
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
+        {% block javascripts %}
 
-        var bookSearch = $('#bookSearch');
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
+
+            var bookSearch = $('#bookSearch');
 
 
-        bookSearch.click(function(e){
-            e.preventDefault();
+            bookSearch.click(function(e){
+                e.preventDefault();
 
-            var bookSearchValue = $('#bookSearchValue').val();
+                var bookSearchValue = $('#bookSearchValue').val();
 
-            var $query = $('#bookSearchValue').val();
+                var $query = $('#bookSearchValue').val();
 
-            // Si le nom de la BD recherchée est plus petit que 3 caractères, message d'erreur
-            if($query.length < 3){
-                $('#status').html('<p style="color:red">Veuillez mettre au moins 3 caractères</p>');
-            } else {
+                // Si le nom de la BD recherchée est plus petit que 3 caractères, message d'erreur
+                if($query.length < 3){
+                    $('#status').html('<p style="color:red">Veuillez mettre au moins 3 caractères</p>');
+                } else {
 
-                $('.book').html('');
+                    $('.book').html('');
 
-                $.ajax({
-                    url: 'https://www.googleapis.com/books/v1/volumes?q=+intitle:' + bookSearchValue,
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data){
+                    $.ajax({
+                        url: 'https://www.googleapis.com/books/v1/volumes?q=+intitle:' + bookSearchValue,
+                        method: 'GET', // modification de la requete en POST
+                        dataType: 'json',
+                        success: function(data){
 
-                        $('.googleId').remove();
+                            $('.googleId').remove();
 
-                        console.log(data);
-                        var items=data.items
-                        //console.log(items)
-                        items.forEach((item) => {
-                            $('#optionResult').after(
-                                `<option name="googleId" class="googleId" value="`+ item.id + `">`+ item.volumeInfo.title +`</option>`
-                                )
-                        });
+                            var items=data.items
+                            
+                            items.forEach((item) => {
+                                $('#optionResult').after(
+                                    `<option name="googleId" class="googleId" value="`+ item.id + `">`+ item.volumeInfo.title +`</option>`
+                                    );
+                                /* $('#comicResult').before(
+                                    `<img class="mx-auto" style="width:80px;height:150px"
+                                    src=" {{ asset('`+ item.volumeInfo.imageLinks.thumbnail + `') }}"
+                                    alt="pochette de ` + item.volumeInfo.title + ` " />`
+                                     
+                                );*/
+                            });
+                            
+                        }
+                    });
 
-                    }
-                });
+                }
+            });
 
-            }
-        });
+        </script>
+    </main>
+{% endblock %}
 
-    </script>
-    {% endblock %}
 
 {% endblock %}

@@ -4,10 +4,10 @@
 
 {% block body %}
 
-<main class="container-fluid my-4">
+<main class="container-fluid my-4 comic_text">
     <div class="row">
             <h1 class="col-12 col-lg-8 offset-lg-2 mb-4 style_title bg-white text-center p-4 comic_case"> Profil : Mes BD </h1>
-        <nav class="col-lg-8 offset-lg-2 navbar navbar-expand-lg nav_bar_library comic_case bg-white comic_text">
+        <nav class="col-lg-8 offset-lg-2 navbar navbar-expand-lg nav_bar_library comic_case bg-white">
             
             <ul class="nav mx-auto nav_text_size">
                 <li class="nav-item">
@@ -29,22 +29,21 @@
         </nav>
     </div>
 
-    <aside class="Profil_Aside my-3 mt-5 ml-lg-5 col-lg-3 col-12">
-        <div class="row">
-            <!-- PB les deux boutons ne sont pas sur la même ligne pour les petite taille xs is sontsuperposés , malgré mon col-xs-5... Pourtant cela fonctionne avec le md -->
-            <a href="{{ path('addComic') }}"><button type="button"
-                class="btn btn-secondary my-1 mx-auto Profil_button col-lg-9 col-md-5 col-sm-5 col-xs-5"><i
-                class="fas fa-plus-circle"></i> Ajouter une
-                BD</button></a>
-                <a href="{{ path('editProfil')}}"> <button type="button"
-                    class="btn btn-secondary my-1 mx-auto Profil_button col-lg-9 col-md-5 col-sm-5 col-xs-5"><i
-                    class="fas fa-user-edit"></i> Editer
-                    profil</button></a>
-                </div>
-            </aside>
+    <div class="row">
+        <div class="col-md-8 offset-md-2 my-4 p-0">
+            <div class="p-4 comic_case bg-white">
+                <p>Désolé... Cette section est encore en construction.</p>
+            </div>
+        </div>
+        <div class="col-md-6 offset-md-3">
+            <img class="comic_case img-fluid" src="{{asset('img/building.jpg')}}" alt="en construction">
+        </div>
+    </div>
+
+    </div>
     
     <div class="row mt-4 offset-lg-1" id="lienTitleAlphC">
-        {% for book in user.books %}
+        {% for book in books %}
         <div class="col-md-2 m-2 py-3 comic_case bg-white">
             <a href="{{ path('displayOneBD', {titleBook : book.title}) }}">
                 <img src=" {{book.getImgUrl()}}" class="img-fluid" alt="{{book.title}}">

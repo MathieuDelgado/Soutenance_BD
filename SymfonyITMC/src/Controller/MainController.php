@@ -283,8 +283,42 @@ class MainController extends AbstractController
         $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
         $userRepo = $this->getDoctrine()->getRepository(User::class);
+        //code implementer pour test et ajouter un livre a la bibliotheque utilisateur
+        $bookIsbn = $bookRepo->findOneByTitle($titleBook)->getIsbn();
+
+
         $book = $bookRepo->findOneByTitle($titleBook);
-        $user = $this->getUser();
+        //$user = $this->getUser();
+        $comments = '';
+
+        // si bouton ajouter à ma biblio cliqué
+        if ($request->isMethod('POST')){
+                    
+            //on vérifie si la bd n'est pas déja présente en bdd
+            $bookIfExist = $bookRepo->findOneByIsbn($bookIsbn);
+
+            if(empty($bookIfExist)){
+                $errors['alreadyExist'] = true;
+
+            }else{
+                //On recupère le manager des entités pour enregistrer en bdd
+                $em = $this->getDoctrine()->getManager();
+
+                $updateUser = $session->get('account');
+                $updateUser = $em->merge($updateUser);
+
+                $updateUser
+                    ->addBook($book);
+                
+                $em -> flush();
+                // return $this->render('displayOneBd.html.twig', array(
+                //     'book' => $book,
+                //     'comments' => $comments
+                //));
+            }
+
+        }
+
         //si formulaire cliqué
         if ($request->isMethod('POST')){
             //TODO remettre le STR_REPLACE
@@ -524,7 +558,7 @@ class MainController extends AbstractController
                 $publisher = isset($items[0]->volumeInfo->publisher) ? $items[0]->volumeInfo->publisher : 'inconnu';
                 $isbn = isset($items[0]->volumeInfo->industryIdentifiers[1]->identifier) ? $items[0]->volumeInfo->industryIdentifiers[1]->identifier : 'inconnu';
                 $synopsis = isset($items[0]->volumeInfo->description) ? $items[0]->volumeInfo->description : 'inconnu';
-                $imgUrl = isset($items[0]->volumeInfo->imageLinks->thumbnail) ? $items[0]->volumeInfo->imageLinks->thumbnail : 'inconnu';
+                $imgUrl = isset($items[0]->volumeInfo->imageLinks->thumbnail) ? $items[0]->volumeInfo->imageLinks->thumbnail : 'https://cdn.shopify.com/s/files/1/0405/8713/products/dark_grey_-_prisma_grande.jpg?v=1419987865';
 
                 // Verif si existe pas
                 $bookRepo = $this->getDoctrine()->getRepository(Book::class);
@@ -543,13 +577,23 @@ class MainController extends AbstractController
                         ->setSynopsis($synopsis)
                         ->setImgUrl($imgUrl)
                         ->setGoogleIdent($googleId);
+                    dump($newBook);
                     //On recupère le manager des entités
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($newBook);
                     $em->flush();
 
-                    return $this->render('addComic.html.twig', ['addComicSuccess' => true]);
+                    //On affichera la pochette du résultat de la recherche 
+                    $books = $bookRepo->findAll();
+                    // on vise le dernier ajout
+                    $lastBookCover = $books[count($books)-1];
+
+                    return $this->render('addComic.html.twig', ['
+                    addComicSuccess' => true,
+                    'lastBookCover' => $lastBookCover
+                    ]);
                 } else {
+                    $errors['comicAlreadyIn'] = true;
                     return $this->render('addComic.html.twig', ['errors' => $errors]);
                 }
             }
@@ -575,13 +619,11 @@ class MainController extends AbstractController
         // On recupère tout les livres de l'utilisateur
         $currentUser = $session->get('account');
 
+        $bookRepo = $this->getDoctrine()->getRepository(Book::class);
         $userRepo = $this->getDoctrine()->getRepository(User::class);
-
-        $userInfos = $userRepo->findOneById($currentUser->getId());
-
+        
         $books = $currentUser->getBooks();
         dump($session);
-        dump($userInfos);
         dump($books);
 
         return $this->render('userProfil.html.twig', array(
