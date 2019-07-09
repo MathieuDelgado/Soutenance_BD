@@ -61,7 +61,7 @@
             </div>
         </div>
     {% endfor %}
-
+    {% if app.session.has('account') %}
     <div class="row pt-3">
         {% if errors.invalidContent is defined %}
             <div class="col-12 pt-1">
@@ -82,5 +82,6 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </main>
 {% endblock %}
